@@ -6,19 +6,18 @@
 
     <parent>
         <groupId>org.moserp</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>facility-module</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <packaging>pom</packaging>
+    <artifactId>facility-domain</artifactId>
 
-    <artifactId>common</artifactId>
-
-    <modules>
-        <module>common-domain</module>
-        <module>common-base</module>
-        <module>common-structure</module>
-    </modules>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.moserp</groupId>
+            <artifactId>common-domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

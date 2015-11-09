@@ -18,7 +18,11 @@ A product management application. A product can have multiple attributes, consis
 A concrete product is called a ProductInstance, it has concrete values for its attributes.
 
 ### Inventory
-A facility can act as a warehouse for ProductInstances. An InventoryItem has mainly a location (Facility), a ProductInstance and a quantity. You can book incoming items through IncomingDelivery and outgoing items through OutgoingDelivery. Between Inventoriesa InventoryTransfer can be made.
+A facility can act as a warehouse for ProductInstances. An InventoryItem has mainly a location (Facility), a ProductInstance and a quantity. You can book incoming items through IncomingDelivery and outgoing items through OutgoingDelivery. Between Inventories a InventoryTransfer can be made.
+
+*Dependencies:*
+  - Facility
+  - Product
 
 
 ## Technology

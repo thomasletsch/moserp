@@ -1,0 +1,28 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/paper_elements/paper_action_dialog.html">
+<link rel="import" href="../../../packages/paper_elements/paper_button.html">
+<link rel="import" href="flexible_table.html">
+<link rel="import" href="resource_edit_button.html">
+<link rel="import" href="resource_delete_button.html">
+<link rel="import" href="polymer_translate.html">
+<link rel="import" href="sub-resource.html">
+
+<polymer-element name="resource-list" attributes="resource">
+    <template>
+        <style>
+            :host {
+                margin: 12px;
+            }
+        </style>
+        <h3>Liste:</h3>
+        <flexible-table data="{{entities}}" columns="{{columns}}" cellFactories="{{cellFactories}}"
+                        name="{{resource.name}}"
+                        cellClickListener="{{cellClickListener}}"></flexible-table>
+        <paper-action-dialog id="sub-resource-dialog" heading="">
+            <sub-resource resource="{{resource}}" id="sub-resource"></sub-resource>
+            <paper-button id="sub-resource-dialog-cancel" dismissive>Abbrechen</paper-button>
+            <paper-button id="sub-resource-dialog-ok" affirmative>Ok</paper-button>
+        </paper-action-dialog>
+    </template>
+    <script type="application/dart" src="resource_list.dart"></script>
+</polymer-element>

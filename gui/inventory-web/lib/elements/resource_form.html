@@ -1,0 +1,18 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/paper_elements/paper_button.html">
+<link rel="import" href="polymer_translate.html">
+
+<polymer-element name="resource-form" attributes="resource entity">
+    <template>
+        <style>
+            :host {
+                margin: 12px;
+            }
+        </style>
+        <h3><polymer-translate key="new"></polymer-translate>:</h3>
+
+        <div id="form"></div>
+    </template>
+    <script type="application/dart" src="resource_form.dart"></script>
+</polymer-element>

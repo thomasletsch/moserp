@@ -1,0 +1,72 @@
+{
+  "shipments" : "Lieferungen",
+  "incomingDeliveries" : "Eingehende Lieferung",
+  "outgoingDeliveries" : "Ausgehende Lieferung",
+
+  "id": "ID",
+  "createdDate" : "Erstellt am",
+  "createdBy" : "Erstellt von",
+  "lastModifiedDate": "Zuletzt geändert am",
+  "lastModifiedBy": "Zuletzt geändert von",
+  "validTo" : "Gültig bis",
+  "validFrom" : "Gültig von",
+  "type": "Typ",
+  "name": "Name",
+  "displayName" : "Anzeige Name",
+  "quantity" : "Anzahl",
+  "status" : "Status",
+  "active" : "Aktiv",
+
+  "facilities" : "Einrichtungen",
+  "facility" : "Einrichtung",
+
+  "inventoryItems" : "Lager Einheiten",
+  "quantityOnHand" : "Anzahl verfügbar",
+
+  "inventoryTransfers" : "Lager Umbuchungen",
+  "fromFacility" : "Aus Lager",
+  "toFacility" : "Ins Lager",
+  "items" : "Positionen",
+
+  "products" : "Produkte",
+  "product" : "Produkt",
+  "ean": "EAN Nummer",
+  "externalId": "Externe Nummer",
+  "quantityUnit": "Einheit für Anzahl",
+  "defaultInventoryUnit": "Std. Lagereinheit",
+  "maxQuantity" : "Max. Anzahl",
+  "catalog" : "Katalog",
+  "salesPrice" : "Verkaufspreis",
+  "attributes" : "Attribute",
+  "retailPrice" : "Einkaufspreis",
+
+  "productInstance" : "Produkt Instanz",
+
+  "productCatalogs" : "Produkt Kataloge",
+  "externalVersion" : "Externe Version",
+
+  "unitOfMeasurements" : "Einheiten",
+  "code" : "Kürzel",
+  "description" : "Beschreibung",
+
+  "valueLists" : "Wertelisten",
+  "key" : "Schlüssel",
+  "values" : "Werte",
+
+  "valueListItems" : "Wertelisteneinträge",
+  "value" : "Wert",
+
+  "users" : "Benutzer",
+
+  "currency" : "Währung",
+
+  "RESOURCE_EDIT" : "Bearbeiten",
+  "RESOURCE_DELETE" : "Löschen",
+
+  "new" : "Neu",
+
+  "ok":"Ok",
+  "cancel":"Abbrechen",
+
+  "":""
+}

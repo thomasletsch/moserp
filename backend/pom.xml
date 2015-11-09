@@ -25,16 +25,10 @@
 
     <modules>
         <module>common</module>
-        <module>common-domain</module>
-        <module>common-structure</module>
-        <module>environment</module>
-        <module>environment-domain</module>
-        <module>facility</module>
-        <module>facility-domain</module>
-        <module>inventory</module>
-        <module>inventory-domain</module>
-        <module>product</module>
-        <module>product-domain</module>
+        <module>environment-module</module>
+        <module>facility-module</module>
+        <module>product-module</module>
+        <module>inventory-module</module>
     </modules>
 
     <dependencies>

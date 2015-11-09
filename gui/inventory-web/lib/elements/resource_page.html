@@ -1,0 +1,35 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="resource_form.html">
+<link rel="import" href="resource_list.html">
+
+<polymer-element name="resource-page" attributes="resource entity">
+    <template>
+        <style>
+            :host {
+                display: block;
+                margin: 12px;
+            }
+        </style>
+        <div layout horizontal fit>
+            <resource-list resource="{{resource}}" resourcePage="{{page}}"></resource-list>
+            <paper-action-dialog id="deletion-confirmation-dialog" heading="Wirklich löschen?">
+                <paper-button id="deletion-confirmation-dialog-cancel" dismissive>
+                    <polymer-translate key="cancel"></polymer-translate>
+                </paper-button>
+                <paper-button id="deletion-confirmation-dialog-ok" affirmative>
+                    <polymer-translate key="ok"></polymer-translate>
+                </paper-button>
+            </paper-action-dialog>
+            <paper-action-dialog id="resource-edit-dialog" heading="">
+                <resource-form resource="{{resource}}" entity="{{entity}}"></resource-form>
+                <paper-button id="resource-edit-dialog-cancel" on-click="{{cancel}}" dismissive>
+                    <polymer-translate key="cancel"></polymer-translate>
+                </paper-button>
+                <paper-button id="resource-edit-dialog-ok" on-click="{{save}}" affirmative>
+                    <polymer-translate key="ok"></polymer-translate>
+                </paper-button>
+            </paper-action-dialog>
+        </div>
+    </template>
+    <script type="application/dart" src="resource_page.dart"></script>
+</polymer-element>

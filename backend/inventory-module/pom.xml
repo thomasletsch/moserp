@@ -13,12 +13,11 @@
 
     <packaging>pom</packaging>
 
-    <artifactId>common</artifactId>
+    <artifactId>inventory-module</artifactId>
 
     <modules>
-        <module>common-domain</module>
-        <module>common-base</module>
-        <module>common-structure</module>
+        <module>inventory-domain</module>
+        <module>inventory</module>
     </modules>
 
 </project>
