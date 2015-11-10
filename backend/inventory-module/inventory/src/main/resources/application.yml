@@ -1,3 +1,5 @@
+server:
+  port: 9304
 spring:
   data:
     mongodb:

@@ -15,10 +15,13 @@
     <packaging>pom</packaging>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <docker.image.prefix>moserp</docker.image.prefix>
+        <java.version>1.8</java.version>
+
         <jackson-datatype-money.version>0.2.0</jackson-datatype-money.version>
         <moneta.version>1.0</moneta.version>
         <zxing.version>3.2.0</zxing.version>
-        <java.version>1.8</java.version>
         <rest-assured.version>2.4.1</rest-assured.version>
         <lombok.version>1.16.6</lombok.version>
     </properties>
@@ -157,6 +160,31 @@
                     <configuration>
                         <sourceDirectory>src/main/java</sourceDirectory>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.2.3</version>
+                    <configuration>
+                        <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                        <dockerDirectory>src/main/docker</dockerDirectory>
+                        <resources>
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${project.build.finalName}.jar</include>
+                            </resource>
+                        </resources>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>CreateImage</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
