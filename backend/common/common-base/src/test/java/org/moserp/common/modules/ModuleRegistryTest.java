@@ -25,14 +25,14 @@ public class ModuleRegistryTest {
 
     @Test
     public void testGetBaseUriForModule() throws Exception {
-        String uri = moduleRegistry.getBaseUriForModule("environment").getUri();
+        String uri = moduleRegistry.getBaseUriForModule("mos_erp_environment_module").getUri();
         assertEquals("uri", "http://localhost:8080/", uri);
     }
 
     @Test
     public void testGetModuleForResource() throws Exception {
         String module = moduleRegistry.getModuleForResource("users");
-        assertEquals("module", "environment", module);
+        assertEquals("module", "mos_erp_environment_module", module);
     }
 
     @Test

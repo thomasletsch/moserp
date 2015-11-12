@@ -3,4 +3,16 @@ spring:
     name: mos_erp_environment_module
   cloud:
     config:
-      uri: ${CONFIG_SERVER_URL:http://localhost:8888}
+      enabled: true
+      discovery:
+        enabled: true
+        serviceId: CONFIG-SERVER
+
+eureka:
+  instance:
+    nonSecurePort: ${server.port:9301}
+    preferIpAddress: true
+    statusPageUrlPath: /structure
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/

@@ -5,19 +5,14 @@
 
 	<parent>
 		<groupId>org.moserp</groupId>
-		<artifactId>inventory-module</artifactId>
+		<artifactId>module-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<relativePath>../../module-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>inventory</artifactId>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.moserp</groupId>
-			<artifactId>common-base</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.moserp</groupId>
 			<artifactId>common-domain</artifactId>
@@ -33,22 +28,6 @@
 			<artifactId>inventory-domain</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-        <dependency>
-            <groupId>org.moserp</groupId>
-            <artifactId>common-structure</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-		<dependency>
-			<groupId>org.moserp</groupId>
-			<artifactId>common-base</artifactId>
-			<version>${project.version}</version>
-			<classifier>tests</classifier>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.moserp</groupId>
 			<artifactId>facility-domain</artifactId>
@@ -56,18 +35,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>
