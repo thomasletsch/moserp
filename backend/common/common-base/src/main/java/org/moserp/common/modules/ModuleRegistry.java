@@ -27,17 +27,11 @@ public class ModuleRegistry {
         String module = getModuleForResource(resource);
         RestUri baseUriForModule = getBaseUriForModule(module);
         log.debug("getBaseUriForResource " + resource + ", module: " + module + ", baseUriForModule: " + baseUriForModule);
-        final BaseUri baseUri = new BaseUri(baseUriForModule.getUri());
-        UriComponentsBuilder builder = baseUri.getUriComponentsBuilder();
-        return new RestUri(builder.pathSegment(resource).build().toString());
+        return baseUriForModule.slash(resource);
     }
 
     public RestUri getSearchUriForResource(String resource) {
-        String module = getModuleForResource(resource);
-        RestUri baseUriForModule = getBaseUriForModule(module);
-        final BaseUri baseUri = new BaseUri(baseUriForModule.getUri());
-        UriComponentsBuilder builder = baseUri.getUriComponentsBuilder();
-        return new RestUri(builder.pathSegment(resource).pathSegment("search").build().toString());
+        return getBaseUriForResource(resource).slash("search");
     }
 
     public RestUri getBaseUriForModule(String module) {

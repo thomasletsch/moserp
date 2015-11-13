@@ -21,6 +21,9 @@ public class RestUri implements Serializable {
     }
 
     public RestUri slash(String pathElement) {
+        if (uri.endsWith("/")) {
+            return new RestUri(uri + pathElement);
+        }
         return new RestUri(uri + "/" + pathElement);
     }
 

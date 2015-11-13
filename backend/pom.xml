@@ -28,7 +28,6 @@
 
     <modules>
         <module>common</module>
-        <module>module-parent</module>
         <module>environment-module</module>
         <module>facility-module</module>
         <module>product-module</module>
@@ -127,7 +126,7 @@
                     <version>0.2.3</version>
                     <configuration>
                         <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                        <dockerDirectory>src/main/docker</dockerDirectory>
+                        <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                         <resources>
                             <resource>
                                 <targetPath>/</targetPath>
