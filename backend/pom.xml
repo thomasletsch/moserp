@@ -33,6 +33,7 @@
         <module>product-module</module>
         <module>inventory-module</module>
         <module>config-server</module>
+        <module>eureka-server</module>
     </modules>
 
     <dependencyManagement>

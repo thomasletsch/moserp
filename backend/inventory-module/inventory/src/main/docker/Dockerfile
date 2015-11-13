@@ -4,4 +4,4 @@ VOLUME /tmp
 VOLUME /target
 RUN bash -c 'touch /app.jar'
 EXPOSE 9304
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ENTRYPOINT ["java","-Xmx256M","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

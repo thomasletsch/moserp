@@ -1,4 +1,4 @@
-package org.moserp.serviceregistry;
+package org.moserp.configserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
