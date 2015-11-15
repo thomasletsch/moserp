@@ -12,6 +12,10 @@
         <level value="DEBUG" />
     </logger>
 
+    <logger name="org.springframework.security">
+        <level value="DEBUG" />
+    </logger>
+
     <logger name="org.apache.http.wire">
         <level value="DEBUG" />
     </logger>

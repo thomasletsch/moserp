@@ -4,3 +4,9 @@ spring:
   data:
     mongodb:
       uri: mongodb://${MONGO_URL}/environment
+ldap:
+  contextSource:
+    url: ldap://172.17.0.3:389/
+    userDn: cn=admin,dc=moserp,dc=org
+    password: Nosfols6
+
