@@ -4,13 +4,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/product
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    leaseRenewalIntervalInSeconds: 10
-    metadataMap:
-      instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
-    statusPageUrlPath: /structure
-
+ldap:
+  contextSource:
+    url: ${LDAP_URL}
+    userDn: cn=admin,dc=moserp,dc=org
+    password: Nosfols6

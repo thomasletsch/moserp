@@ -6,7 +6,7 @@ spring:
       uri: mongodb://${MONGO_URL}/environment
 ldap:
   contextSource:
-    url: ldap://172.17.0.3:389/
+    url: ${LDAP_URL}
     userDn: cn=admin,dc=moserp,dc=org
     password: Nosfols6
 
