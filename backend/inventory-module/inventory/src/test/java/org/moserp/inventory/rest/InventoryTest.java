@@ -50,7 +50,7 @@ public class InventoryTest extends BaseWebInventoryTest {
         InventoryTransfer inventoryTransfer = new InventoryTransfer(new ProductInstance(product), facility, mobileFacility, new Quantity(55));
         restTemplate.postForLocation(testEnvironment.createRestUri("inventoryTransfers"), inventoryTransfer);
         Resources<InventoryItem> inventories = restTemplate
-                .exchange(testEnvironment.createRestUri("products/1/inventoryItems"), HttpMethod.GET, null, new ParameterizedTypeReference<Resources<InventoryItem>>() {
+                .exchange(testEnvironment.createRestUri("inventoryItems/search/findByProductIdOrFacilityId?productId=1"), HttpMethod.GET, null, new ParameterizedTypeReference<Resources<InventoryItem>>() {
                 }).getBody();
         assertEquals("size", 2, inventories.getContent().size());
     }
@@ -60,7 +60,7 @@ public class InventoryTest extends BaseWebInventoryTest {
         InventoryTransfer inventoryTransfer = new InventoryTransfer(new ProductInstance(product), facility, mobileFacility, new Quantity(55));
         restTemplate.postForLocation(testEnvironment.createRestUri("inventoryTransfers"), inventoryTransfer);
         Resources<InventoryItem> inventories = restTemplate
-                .exchange(testEnvironment.createRestUri("facilities/2/inventoryItems"), HttpMethod.GET, null, new ParameterizedTypeReference<Resources<InventoryItem>>() {
+                .exchange(testEnvironment.createRestUri("inventoryItems/search/findByProductIdOrFacilityId?facilityId=2"), HttpMethod.GET, null, new ParameterizedTypeReference<Resources<InventoryItem>>() {
                 }).getBody();
         assertEquals("size", 1, inventories.getContent().size());
     }

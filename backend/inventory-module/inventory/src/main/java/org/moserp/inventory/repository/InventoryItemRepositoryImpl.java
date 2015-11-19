@@ -34,4 +34,5 @@ public class InventoryItemRepositoryImpl implements InventoryItemRepositoryCusto
         return mongoTemplate.find(query, InventoryItem.class);
     }
 
+
 }

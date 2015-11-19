@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -60,6 +61,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * </pre>
  */
 @Configuration
+@Profile({"ldap", "docker"})
 @EnableWebSecurity
 public class GlobalAuthenticationConfiguration extends WebSecurityConfigurerAdapter {
 

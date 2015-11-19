@@ -3,9 +3,9 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/inventory
+      uri: mongodb://${MONGO_URL:localhost:27017}/inventory
 ldap:
   contextSource:
     url: ${LDAP_URL}
     userDn: cn=admin,dc=moserp,dc=org
-    password: Nosfols6
+    password: ${LDAP_PASSWORD}

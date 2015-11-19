@@ -6,8 +6,9 @@ import org.moserp.common.modules.ModuleRegistry;
 import org.moserp.inventory.domain.InventoryItem;
 import org.moserp.inventory.repository.InventoryItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.hateoas.ExposesResourceFor;
-import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +17,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
 @RestController
 @ExposesResourceFor(InventoryItem.class)
 public class InventoryController {
 
     @Autowired
     private InventoryItemRepository repository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     private InventoryItemLinks inventoryItemLinks;
@@ -38,33 +45,23 @@ public class InventoryController {
         return inventoryItems.stream().map(InventoryItem::getQuantityOnHand).reduce(Quantity.ZERO, Quantity::add);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/facilities/{facilityId}/inventoryItems")
-    public Resources<Resource<InventoryItem>> getInventoryItemsPerFacility(@RequestParam(required = false) String productId,
-                                                                           @PathVariable String facilityId) {
+    @RequestMapping(method = RequestMethod.GET, value = "/inventoryItems/search/findByProductIdOrFacilityId")
+    public Resources<Resource<InventoryItem>> findByProductIdOrFacilityId(@RequestParam(required = false) String productId,
+                                                                          @RequestParam(required = false) String facilityId) {
         List<InventoryItem> items;
         RestUri facilityBaseUri = moduleRegistry.getBaseUriForResource(OtherResources.FACILITIES);
         RestUri facilityUri = facilityBaseUri.slash(facilityId);
-        if (productId == null) {
-            items = repository.findByFacility(facilityUri);
-        } else {
-            RestUri productsBaseUri = moduleRegistry.getBaseUriForResource(OtherResources.PRODUCTS);
-            RestUri productUri = productsBaseUri.slash(productId);
-            items = repository.findByProductAndFacility(productUri, facilityUri);
-        }
-        Stream<Resource<InventoryItem>> resourceStream = items.stream().map(inventoryItem -> new Resource<>(inventoryItem));
-        List<Resource<InventoryItem>> inventoryItemResources = resourceStream.collect(Collectors.toList());
-        inventoryItemResources.forEach(inventoryItemLinks::addLinks);
-        return new Resources<>(inventoryItemResources);
-    }
-
-
-    @ResponseBody
-    @RequestMapping(method = RequestMethod.GET, value = "/products/{productId}/inventoryItems", produces = MediaTypes.HAL_JSON_VALUE)
-    public Resources<Resource<InventoryItem>> getInventoryItemsPerProduct(@PathVariable String productId) {
         RestUri productsBaseUri = moduleRegistry.getBaseUriForResource(OtherResources.PRODUCTS);
         RestUri productUri = productsBaseUri.slash(productId);
-        List<InventoryItem> inventoryItems = repository.findByProductInstanceProduct(productUri);
-        Stream<Resource<InventoryItem>> resourceStream = inventoryItems.stream().map(inventoryItem -> new Resource<>(inventoryItem));
+        if (productId == null) {
+            items = repository.findByFacility(facilityUri);
+        } else if (facilityId == null) {
+            items =  repository.findByProductInstanceProduct(productUri);
+        } else {
+            Query query = query(where("productInstance.product").is(productUri.getUri()).and("facility").is(facilityUri.getUri()));
+            items =  mongoTemplate.find(query, InventoryItem.class);
+        }
+        Stream<Resource<InventoryItem>> resourceStream = items.stream().map(inventoryItem -> new Resource<>(inventoryItem));
         List<Resource<InventoryItem>> inventoryItemResources = resourceStream.collect(Collectors.toList());
         inventoryItemResources.forEach(inventoryItemLinks::addLinks);
         return new Resources<>(inventoryItemResources);

@@ -3,10 +3,10 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://${MONGO_URL}/environment
+      uri: mongodb://${MONGO_URL:localhost:27017}/environment
 ldap:
   contextSource:
     url: ${LDAP_URL}
     userDn: cn=admin,dc=moserp,dc=org
-    password: Nosfols6
+    password: ${LDAP_PASSWORD}
 

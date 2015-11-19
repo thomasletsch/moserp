@@ -8,10 +8,12 @@ import org.moserp.common.modules.ModuleRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 @WebIntegrationTest(randomPort = true)
+@ActiveProfiles("test")
 @SpringApplicationConfiguration(classes = { TestWebApplication.class })
 @RunWith(SpringJUnit4ClassRunner.class)
 public abstract class BaseWebIntegrationTest {

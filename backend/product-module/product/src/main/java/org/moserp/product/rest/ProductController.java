@@ -5,13 +5,18 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.oned.EAN13Writer;
+import org.moserp.common.domain.Quantity;
+import org.moserp.common.domain.RestUri;
+import org.moserp.common.modules.ModuleRegistry;
 import org.moserp.product.domain.Product;
 import org.moserp.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -24,6 +29,12 @@ public class ProductController {
 
     @Autowired
     private ProductRepository repository;
+
+    @Autowired
+    private ModuleRegistry moduleRegistry;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{productId}/ean")
@@ -40,6 +51,22 @@ public class ProductController {
         byte[] imageData = baos.toByteArray();
         ByteArrayResource byteArrayResource = new ByteArrayResource(imageData);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(byteArrayResource);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/products/{productId}/quantityOnHand")
+    public Quantity getProductQuantityOnHand(@PathVariable String productId) {
+        RestUri productsBaseUri = moduleRegistry.getBaseUriForResource(OtherResources.INVENTORIES);
+        Quantity quantity = restTemplate.getForObject(productsBaseUri + "/" + productId + "/quantityOnHand", Quantity.class);
+        return quantity;
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/products/{productId}/inventoryItems", produces = MediaTypes.HAL_JSON_VALUE)
+    public String getInventoryItemsPerProduct(@PathVariable String productId) {
+        RestUri productsBaseUri = moduleRegistry.getBaseUriForResource(OtherResources.INVENTORIES);
+        String inventoryItems = restTemplate.getForObject(productsBaseUri + "/" + productId + "/inventoryItems", String.class);
+        return inventoryItems;
     }
 
 

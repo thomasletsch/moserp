@@ -35,33 +35,31 @@ public class ModuleRegistry {
     }
 
     public RestUri getBaseUriForModule(String module) {
+        String property = environment.getProperty(module + ".baseUri");
+        if(property != null) {
+            return new RestUri(property);
+        }
         List<ServiceInstance> serviceInstances = discoveryClient.getInstances(module);
         if(serviceInstances.size() > 0) {
             URI uri = serviceInstances.get(0).getUri();
             return RestUri.from(uri).withoutPath();
         }
-        String property = environment.getProperty("module." + module + ".baseUri");
-        if(property == null) {
-            log.debug("module." + module + ".baseUri" + " not found in properties. Assuming own module.");
-            String port = environment.getProperty("server.port");
-            return new RestUri("http://localhost:" + port);
-        }
-        return new RestUri(property);
+        return null;
     }
 
     // TODO: Use service registry for resource -> module lookup
     public String getModuleForResource(String resource) {
         switch (resource) {
-            case "users" : return "mos_erp_environment_module";
-            case "unitOfMeasurements" : return "mos_erp_environment_module";
-            case "valueLists" : return "mos_erp_environment_module";
-            case "facilities" : return "mos_erp_facility_module";
-            case "products" : return "mos_erp_product_module";
-            case "productCatalog" : return "mos_erp_product_module";
-            case "incomingDeliveries" : return "mos_erp_inventory_module";
-            case "outgoingDeliveries" : return "mos_erp_inventory_module";
-            case "inventoryTransfers" : return "mos_erp_inventory_module";
-            case "inventoryItems" : return "mos_erp_inventory_module";
+            case "users" : return "MOS_ERP_ENVIRONMENT_MODULE";
+            case "unitOfMeasurements" : return "MOS_ERP_ENVIRONMENT_MODULE";
+            case "valueLists" : return "MOS_ERP_ENVIRONMENT_MODULE";
+            case "facilities" : return "MOS_ERP_FACILITY_MODULE";
+            case "products" : return "MOS_ERP_PRODUCT_MODULE";
+            case "productCatalog" : return "MOS_ERP_PRODUCT_MODULE";
+            case "incomingDeliveries" : return "MOS_ERP_INVENTORY_MODULE";
+            case "outgoingDeliveries" : return "MOS_ERP_INVENTORY_MODULE";
+            case "inventoryTransfers" : return "MOS_ERP_INVENTORY_MODULE";
+            case "inventoryItems" : return "MOS_ERP_INVENTORY_MODULE";
             default: return "";
         }
     }
