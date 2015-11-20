@@ -9,6 +9,8 @@ This projects aims at creating small microservices for each area.
 See the Wiki for more details.
 
 ## Status
-I am working on getting it running on travis ci. That should also make it independent from any settings on my machine.
+ALPHA. Should be ok to try it out.
+
+Travis Build working.
 
 
