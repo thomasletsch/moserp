@@ -1,0 +1,3 @@
+[submodule "spring-mvc-logger"]
+	path = spring-mvc-logger
+	url = https://github.com/thomasletsch/spring-mvc-logger.git
