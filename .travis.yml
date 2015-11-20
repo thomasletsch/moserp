@@ -1,4 +1,4 @@
 language: java
-script: cd backend & mvn -Pinttest clean verify
+script: mvn -f backend/pom.xml -Pinttest clean verify
 jdk:
   - oraclejdk8
