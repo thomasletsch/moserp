@@ -6,15 +6,12 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.oned.EAN13Writer;
 import org.moserp.common.domain.Quantity;
-import org.moserp.common.domain.RestUri;
 import org.moserp.common.modules.ModuleRegistry;
 import org.moserp.product.domain.Product;
 import org.moserp.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.hateoas.MediaTypes;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,6 +19,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/products")
@@ -54,20 +52,14 @@ public class ProductController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET, value = "/products/{productId}/quantityOnHand")
-    public Quantity getProductQuantityOnHand(@PathVariable String productId) {
-        RestUri productsBaseUri = moduleRegistry.getBaseUriForResource(OtherResources.INVENTORIES);
-        Quantity quantity = restTemplate.getForObject(productsBaseUri + "/" + productId + "/quantityOnHand", Quantity.class);
-        return quantity;
+    @RequestMapping(method = RequestMethod.GET, value = "/{productId}/quantityOnHand")
+    public Quantity getProductQuantityOnHand(@RequestHeader(value = "Authorization") String authorization, @PathVariable String productId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("Authorization", Collections.singletonList(authorization));
+        HttpEntity request = new HttpEntity(headers);
+        String url = "http://" + OtherResources.MODULE_INVENTORY + "/" + OtherResources.PRODUCTS + "/" + productId + "/quantityOnHand";
+        ResponseEntity<Quantity> responseEntity = restTemplate.exchange(url, HttpMethod.GET, request, Quantity.class);
+        return responseEntity.getBody();
     }
-
-    @ResponseBody
-    @RequestMapping(method = RequestMethod.GET, value = "/products/{productId}/inventoryItems", produces = MediaTypes.HAL_JSON_VALUE)
-    public String getInventoryItemsPerProduct(@PathVariable String productId) {
-        RestUri productsBaseUri = moduleRegistry.getBaseUriForResource(OtherResources.INVENTORIES);
-        String inventoryItems = restTemplate.getForObject(productsBaseUri + "/" + productId + "/inventoryItems", String.class);
-        return inventoryItems;
-    }
-
 
 }

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: mos_erp_product_module
+    name: product.moserp.org
   cloud:
     config:
       uri: ${CONFIG_SERVER_URL:http://localhost:8888}

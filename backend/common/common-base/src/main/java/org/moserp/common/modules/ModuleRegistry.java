@@ -27,6 +27,9 @@ public class ModuleRegistry {
         String module = getModuleForResource(resource);
         RestUri baseUriForModule = getBaseUriForModule(module);
         log.debug("getBaseUriForResource " + resource + ", module: " + module + ", baseUriForModule: " + baseUriForModule);
+       if(baseUriForModule == null) {
+           return null;
+       }
         return baseUriForModule.slash(resource);
     }
 
@@ -50,16 +53,16 @@ public class ModuleRegistry {
     // TODO: Use service registry for resource -> module lookup
     public String getModuleForResource(String resource) {
         switch (resource) {
-            case "users" : return "MOS_ERP_ENVIRONMENT_MODULE";
-            case "unitOfMeasurements" : return "MOS_ERP_ENVIRONMENT_MODULE";
-            case "valueLists" : return "MOS_ERP_ENVIRONMENT_MODULE";
-            case "facilities" : return "MOS_ERP_FACILITY_MODULE";
-            case "products" : return "MOS_ERP_PRODUCT_MODULE";
-            case "productCatalog" : return "MOS_ERP_PRODUCT_MODULE";
-            case "incomingDeliveries" : return "MOS_ERP_INVENTORY_MODULE";
-            case "outgoingDeliveries" : return "MOS_ERP_INVENTORY_MODULE";
-            case "inventoryTransfers" : return "MOS_ERP_INVENTORY_MODULE";
-            case "inventoryItems" : return "MOS_ERP_INVENTORY_MODULE";
+            case "users" : return "environment.moserp.org";
+            case "unitOfMeasurements" : return "environment.moserp.org";
+            case "valueLists" : return "environment.moserp.org";
+            case "facilities" : return "facility.moserp.org";
+            case "products" : return "product.moserp.org";
+            case "productCatalog" : return "product.moserp.org";
+            case "incomingDeliveries" : return "inventory.moserp.org";
+            case "outgoingDeliveries" : return "inventory.moserp.org";
+            case "inventoryTransfers" : return "inventory.moserp.org";
+            case "inventoryItems" : return "inventory.moserp.org";
             default: return "";
         }
     }

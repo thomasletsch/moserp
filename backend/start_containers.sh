@@ -31,7 +31,7 @@ docker run --name mos_erp_config_service -P --net=host -e EUREKA_URL=${EUREKA_UR
 # Wait for LEASE_TIMEOUT + CONFIG_SERVER Start Time to be sure that it is registered at EUREKA
 sleep 45
 
-docker run --name mos_erp_environment -P --net=host -e LDAP_URL=${LDAP_URL} -e LDAP_PASWORD=${LDAP_PASSWORD} -e EUREKA_URL=${EUREKA_URL} -e SPRING_PROFILES_ACTIVE="docker" -d moserp/environment
-docker run --name mos_erp_facility -P --net=host -e LDAP_URL=${LDAP_URL} -e LDAP_PASWORD=${LDAP_PASSWORD} -e EUREKA_URL=${EUREKA_URL} -e SPRING_PROFILES_ACTIVE="docker" -d moserp/facility
-docker run --name mos_erp_product -P --net=host -e LDAP_URL=${LDAP_URL} -e LDAP_PASWORD=${LDAP_PASSWORD} -e EUREKA_URL=${EUREKA_URL} -e SPRING_PROFILES_ACTIVE="docker" -d moserp/product
-docker run --name mos_erp_inventory -P --net=host -e LDAP_URL=${LDAP_URL} -e LDAP_PASWORD=${LDAP_PASSWORD} -e EUREKA_URL=${EUREKA_URL} -e SPRING_PROFILES_ACTIVE="docker" -d moserp/inventory
+docker run --name mos_erp_environment -P --net=host -e LDAP_URL=${LDAP_URL} -e LDAP_PASSWORD=${LDAP_PASSWORD} -e EUREKA_URL=${EUREKA_URL} -e SPRING_PROFILES_ACTIVE="docker" -d moserp/environment
+docker run --name mos_erp_facility -P --net=host -e LDAP_URL=${LDAP_URL} -e LDAP_PASSWORD=${LDAP_PASSWORD} -e EUREKA_URL=${EUREKA_URL} -e SPRING_PROFILES_ACTIVE="docker" -d moserp/facility
+docker run --name mos_erp_product -P --net=host -e LDAP_URL=${LDAP_URL} -e LDAP_PASSWORD=${LDAP_PASSWORD} -e EUREKA_URL=${EUREKA_URL} -e SPRING_PROFILES_ACTIVE="docker" -d moserp/product
+docker run --name mos_erp_inventory -P --net=host -e LDAP_URL=${LDAP_URL} -e LDAP_PASSWORD=${LDAP_PASSWORD} -e EUREKA_URL=${EUREKA_URL} -e SPRING_PROFILES_ACTIVE="docker" -d moserp/inventory

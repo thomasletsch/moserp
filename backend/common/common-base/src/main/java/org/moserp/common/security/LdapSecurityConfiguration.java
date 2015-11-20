@@ -1,4 +1,4 @@
-package org.moserp;
+package org.moserp.common.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -63,7 +63,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @Profile({"ldap", "docker"})
 @EnableWebSecurity
-public class GlobalAuthenticationConfiguration extends WebSecurityConfigurerAdapter {
+public class LdapSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

@@ -6,6 +6,6 @@ spring:
       uri: mongodb://${MONGO_URL:localhost:27017}/inventory
 ldap:
   contextSource:
-    url: ${LDAP_URL}
+    url: ${LDAP_URL:localhost:389}
     userDn: cn=admin,dc=moserp,dc=org
-    password: ${LDAP_PASSWORD}
+    password: ${LDAP_PASSWORD:password}
