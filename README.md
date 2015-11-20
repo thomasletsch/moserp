@@ -9,8 +9,8 @@ This projects aims at creating small microservices for each area.
 See the Wiki for more details.
 
 ## Status
-ALPHA. Should be ok to try it out.
+[![Build Status](https://travis-ci.org/thomasletsch/moserp.svg)](https://travis-ci.org/thomasletsch/moserp)
 
-Travis Build working.
+Status: ALPHA. Should be ok to try it out.
 
 
