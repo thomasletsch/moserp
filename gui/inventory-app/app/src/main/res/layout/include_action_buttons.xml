@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:layout_gravity="end"
+    tools:showIn="@layout/include_facility_view">
+
+    <ImageButton
+        android:id="@+id/incomingDeliveryButton"
+        style="@style/ActionButton"
+        android:contentDescription="@string/tooltip_incoming_delivery"
+        android:src="@drawable/ic_add_black_48dp"
+        />
+
+    <ImageButton
+        android:id="@+id/outgoingDeliveryButton"
+        style="@style/ActionButton"
+        android:contentDescription="@string/tooltip_outgoing_delivery"
+        android:src="@drawable/ic_remove_black_48dp"
+        />
+
+    <ImageButton
+        android:id="@+id/inventoryTransferButton"
+        style="@style/ActionButton"
+        android:contentDescription="@string/tooltip_inventory_transfer"
+        android:src="@drawable/ic_import_export_black_48dp"
+        />
+</LinearLayout>
+
+    

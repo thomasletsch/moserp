@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="org.moserp.product.Product"/>
+
+        <variable
+            name="clicklistener"
+            type="android.view.View.OnClickListener"/>
+    </data>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:columnCount="4"
+        app:onClickListener="@{clicklistener}"
+        >
+
+        <TextView
+            android:id="@+id/labelProduct"
+            style="@style/FormLabel"
+            android:text="@string/label_product_name"
+            />
+
+        <TextView
+            android:id="@+id/productName"
+            style="@style/FormValue"
+            android:text="@{item.name}"
+            />
+
+        <TextView
+            android:id="@+id/labelEan"
+            style="@style/FormLabel"
+            android:text="@string/label_ean"
+            />
+
+        <TextView
+            android:id="@+id/productEan"
+            style="@style/FormValue"
+            android:text="@{item.ean}"/>
+
+        <View style="@style/Divider" android:layout_columnSpan="4"/>
+
+    </GridLayout>
+
+</layout>

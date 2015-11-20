@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <variable
+            name="incomingDeliveryViewModel"
+            type="org.moserp.inventory.IncomingDeliveryViewModel"/>
+
+        <variable
+            name="saveClickListener"
+            type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="cancelClickListener"
+            type="android.view.View.OnClickListener"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize">
+        </android.support.v7.widget.Toolbar>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="5"
+            >
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/FormLabel"
+                android:labelFor="@+id/facilitiesSpinner"
+                android:text="@string/label_toFacility"
+                />
+
+            <Spinner
+                android:id="@+id/facilitiesSpinner"
+                style="@style/FormField"
+                android:dropDownWidth="wrap_content"
+                />
+
+            <View style="@style/Divider" android:layout_columnSpan="2"/>
+
+            <TextView
+                android:id="@+id/labelProduct"
+                style="@style/FormLabel"
+                android:labelFor="@+id/productsSpinner"
+                android:text="@string/label_product"/>
+
+            <Spinner
+                android:id="@+id/productsSpinner"
+                style="@style/FormField"
+                android:dropDownWidth="wrap_content"/>
+
+            <View style="@style/Divider" android:layout_columnSpan="2"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/quantityTextInputLayout"
+                style="@style/TextInputField"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/ErrorText"
+                app:hintTextAppearance="@style/FloatLabel"
+                >
+
+                <EditText
+                    android:id="@+id/quantityText"
+                    style="@style/FormField"
+                    android:ems="5"
+                    android:inputType="numberDecimal"
+                    android:text="@{incomingDeliveryViewModel.quantity}"
+                    android:hint="@string/label_quantity"
+                    android:addTextChangedListener="@{incomingDeliveryViewModel.quantityWatcher}"
+                    >
+
+                </EditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <View style="@style/Divider" android:layout_columnSpan="2"/>
+        </GridLayout>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/cancelButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_cancel"
+                android:onClick="@{cancelClickListener}"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                />
+
+            <ImageButton
+                android:id="@+id/saveButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_save"
+                android:onClick="@{saveClickListener}"
+                android:src="@android:drawable/ic_menu_save"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FormLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_form_label_to_field</item>
+        <item name="android:layout_marginTop">@dimen/margin_form_label</item>
+        <item name="android:layout_marginBottom">@dimen/margin_form_label</item>
+        <item name="android:textColor">@color/field_label</item>
+        <item name="android:textColorHint">@color/field_label</item>
+        <item name="android:textSize">@dimen/field_label_size</item>
+    </style>
+
+    <style name="FormValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_form_label</item>
+        <item name="android:layout_marginTop">@dimen/margin_form_label</item>
+        <item name="android:layout_marginBottom">@dimen/margin_form_label</item>
+        <item name="android:textColor">@color/field_value</item>
+        <item name="android:textColorHint">@color/field_label</item>
+        <item name="android:textSize">@dimen/field_value_size</item>
+    </style>
+
+    <style name="FormField">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/margin_form_label</item>
+        <item name="android:textColorHint">@color/field_label</item>
+        <item name="android:textColor">@color/field_value</item>
+        <item name="android:textSize">@dimen/field_value_size</item>
+    </style>
+
+    <style name="TextInputField">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/margin_form_label</item>
+        <item name="android:textColorHint">@color/field_label</item>
+        <item name="android:textColor">@color/field_value</item>
+        <item name="android:textSize">@dimen/field_value_size</item>
+    </style>
+
+    <style name="Header">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_form_label</item>
+        <item name="android:textColor">@color/field_label</item>
+        <item name="android:textSize">@dimen/header_size</item>
+    </style>
+
+    <style name="ErrorText" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textColor">@color/error_text</item>
+    </style>
+
+    <style name="FloatLabel" parent="android:TextAppearance.Small">
+        <item name="android:textColor">@color/field_label</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+</resources>

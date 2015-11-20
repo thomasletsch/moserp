@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.databinding.ObservableArrayList"/>
+
+        <import type="android.view.View"/>
+
+        <import type="org.moserp.inventory.InventoryItem"/>
+
+        <variable
+            name="inventoryItems"
+            type="ObservableArrayList&lt;InventoryItem>"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize">
+        </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/inventoryItemsHeader"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_inventoryItems"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/inventoryItemsList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scrollbars="vertical"/>
+
+            <include layout="@layout/include_action_buttons"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

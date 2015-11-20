@@ -1,0 +1,99 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.android.databinding'
+apply plugin: 'com.neenbedankt.android-apt'
+
+def aa_version = '3.3.2'
+def espresso_version = '2.2.1'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "org.moserp.inventory"
+        minSdkVersion 18
+        targetSdkVersion 23
+        versionName "1.0"
+        versionCode 1
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dexOptions {
+        preDexLibraries = false
+    }
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/notice.txt'
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
+        logLevel 'WARN'
+    }
+}
+
+dependencies {
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    // UI libraries
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:cardview-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    //compile 'com.android.support:palette-v7:23.0.0'
+    //compile 'com.android.support:gridlayout-v7:23.0.0'
+    compile 'de.codecrafters.tableview:tableview:0.9.5'
+
+    // Spring and Rest
+    compile('org.springframework.hateoas:spring-hateoas:0.17.0.RELEASE') {
+        exclude group: '*'
+    }
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+
+    // ZXing Scanner Lib
+    compile 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
+    compile 'com.google.zxing:core:3.2.0'
+
+    // Frameworks - general
+    apt 'com.android.databinding:compiler:1.0-rc5'
+    apt "org.androidannotations:androidannotations:$aa_version"
+    compile "org.androidannotations:androidannotations-api:$aa_version"
+    compile 'de.greenrobot:eventbus:2.4.0'
+
+//    apt "org.androidannotations:roboguice:$aa_version"
+//    compile 'org.roboguice:roboguice:3.0.1'
+//    apt 'org.roboguice:roboblender:3.0.1'
+
+    // Test
+    androidTestCompile 'com.android.support:support-annotations:23.1.1'
+    androidTestCompile 'com.android.support.test:runner:0.4'
+    androidTestCompile 'com.android.support.test:rules:0.4'
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$espresso_version"
+    androidTestCompile "com.android.support.test.espresso:espresso-intents:$espresso_version"
+//    androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:2.1.2"
+
+    // Unit Tests
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+}
+
+repositories {
+    maven {
+        url 'http://repo.spring.io/milestone'
+    }
+
+}

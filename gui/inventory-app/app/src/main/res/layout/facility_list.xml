@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="org.moserp.environment.Facility"/>
+
+        <variable
+            name="clicklistener"
+            type="android.view.View.OnClickListener"/>
+
+    </data>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_form"
+        android:rowCount="2"
+        android:columnCount="1"
+        android:clickable="true"
+        >
+
+        <TextView
+            android:id="@+id/facilityName"
+            style="@style/FormValue"
+            android:layout_column="0"
+            android:layout_gravity="fill"
+            android:gravity="fill"
+            android:text="@{item.name}"
+            app:onClickListener="@{clicklistener}"
+            />
+
+        <View style="@style/Divider" android:layout_columnSpan="1"/>
+
+    </GridLayout>
+</layout>

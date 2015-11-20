@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="secondary_text">#212121</color>
+    <color name="primary_text">#000000</color>
+    <color name="primary_text_inverse">#e0e0e0</color>
+    <color name="primary">#2196f3</color>
+    <color name="primary_dark">#0d47a1</color>
+    <color name="accent">#90caf9</color>
+    <color name="field_label">#0d47a1</color>
+    <color name="field_value">#000000</color>
+    <color name="error_text">#000000</color>
+    <!--<color name="action_button_bg">@color/background_material_light</color>-->
+</resources>

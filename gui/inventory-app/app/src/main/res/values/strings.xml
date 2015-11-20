@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Lager Verwaltung</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="toast.backend.error">Server Verbindung fehlgeschlagen</string>
+
+    <string name="action_search">Suche</string>
+    <string name="search_hint">Suche nach Produkten</string>
+    <string name="title_activity_search">Suche</string>
+
+    <string name="action_scan">Scannen</string>
+    <string name="toast.scan.cancelled">Scan abgebrochen</string>
+
+    <string name="label_inventoryItems">Lager Einheiten</string>
+    <string name="label_facility.name">Einrichtung:</string>
+
+    <string name="title_activity_product_list">Produkte</string>
+    <string name="title_activity_product_detail">Produkt Details</string>
+    <string name="view.products">Produkte</string>
+    <string name="title_details">Details</string>
+    <string name="label_id">Nr.:</string>
+    <string name="label_ean">EAN:</string>
+    <string name="label_product_name">Name:</string>
+    <string name="label_quantity">Anzahl:</string>
+    <string name="label_quantityOnHand">Verfügbar:</string>
+    <string name="toast.no_product_found">Kein Produkt gefunden</string>
+
+    <string name="view.resources">Einrichtungen</string>
+    <string name="label_totalQuantityOnHand">Gesamt auf Lager:</string>
+    <string name="label_product">Produkt:</string>
+
+    <string name="title_activity_incoming_delivery">Eingehende Lieferung</string>
+    <string name="tooltip_incoming_delivery">Eingehende Lieferung</string>
+    <string name="label_toFacility">Ins Lager:</string>
+
+    <string name="title_activity_outgoing_delivery">Ausgehende Lieferung</string>
+    <string name="tooltip_outgoing_delivery">Ausgehende Lieferung</string>
+    <string name="label_fromFacility">Aus Lager:</string>
+
+    <string name="title_activity_inventory_transfer">Lager Umbuchen</string>
+    <string name="tooltip_inventory_transfer">Lager Umbuchung</string>
+
+    <string name="action_save">Speichern</string>
+    <string name="action_cancel">Abbrechen</string>
+
+</resources>

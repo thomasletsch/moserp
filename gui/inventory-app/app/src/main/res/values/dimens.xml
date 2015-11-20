@@ -1,0 +1,15 @@
+<resources>
+    <dimen name="navigation_drawer_width">240dp</dimen>
+
+    <dimen name="margin_form">16dp</dimen>
+    <dimen name="margin_form_fields">20dp</dimen>
+    <dimen name="margin_form_label">10dp</dimen>
+    <dimen name="margin_form_label_to_field">4dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="field_label_size">18sp</dimen>
+    <dimen name="field_value_size">18sp</dimen>
+    <dimen name="header_size">22sp</dimen>
+</resources>

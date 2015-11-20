@@ -1,0 +1,10 @@
+<resources>
+    <string name="title_activity_preferences">Einstellungen</string>
+
+    <string name="pref_user_name_title">Login</string>
+    <string name="pref_user_name_default">testuser</string>
+    <string name="pref_password_title">Passwort</string>
+    <string name="pref_password_default">password</string>
+    <string name="pref_backend_url_title">Server URL</string>
+    <string name="pref_backend_url_default">http://laptop-dell-linux:8761/</string>
+</resources>
