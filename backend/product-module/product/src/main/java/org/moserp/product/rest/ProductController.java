@@ -54,6 +54,9 @@ public class ProductController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{productId}/quantityOnHand")
     public Quantity getProductQuantityOnHand(@RequestHeader(value = "Authorization") String authorization, @PathVariable String productId) {
+        if(!moduleRegistry.isModuleRegistered(OtherResources.MODULE_INVENTORY)) {
+            return Quantity.ZERO;
+        }
         HttpHeaders headers = new HttpHeaders();
         headers.put("Authorization", Collections.singletonList(authorization));
         HttpEntity request = new HttpEntity(headers);

@@ -50,6 +50,14 @@ public class ModuleRegistry {
         return null;
     }
 
+    public boolean isModuleRegistered(String module) {
+        String property = environment.getProperty(module + ".baseUri");
+        if(property != null) {
+            return true;
+        }
+        return discoveryClient.getServices().contains(module);
+    }
+
     // TODO: Use service registry for resource -> module lookup
     public String getModuleForResource(String resource) {
         switch (resource) {
