@@ -1,7 +1,16 @@
 language: java
-script: mvn -f spring-mvc-logger/pom.xml clean install & mvn -f backend/pom.xml -Pdocker package & mvn -f backend/pom.xml -Pinttest verify
+script: mvn -f spring-mvc-logger/pom.xml clean install & mvn -f backend/pom.xml -Pdocker
+  package & mvn -f backend/pom.xml -Pinttest verify
 jdk:
-  - oraclejdk8
+- oraclejdk8
 services:
-  - mongodb
-  - docker
+- mongodb
+- docker
+deploy:
+  provider: releases
+  api_key:
+    secure: LM1jOTtzWZ6irGzOxIZRt7aWUQKokC1M6zkf7tjeVVo0LyV0mvj6H1cpZzKfkwRKB15qLC8u4rjg8il8UD/cw1BVnSTDcNLbfwwIl7yenaMm68+4svfcH3NmA1dnLLq6pQVcgXOBW6Dg2p9GmdlnIrgXjtCudnEg6z/Xlhc58tF154HGdM/w+evHxznvw2IpRWuaqmIFvkVFPea0vI1yhM53Px/JQsno8n+/yd3zBD2lJt0DPUGerOJdzlf37Ii8EMc/OsRqrC7uyz7VM2zy+oDQvSyS5XVpdYlNpMb+ji05hWoA3yHFV0vSJlvFgCTJ+rjugnC5I0nl3R6xyZb6rLgGMHpJfhlCxaW43CL007fVI8xKN+neHfl6xXhXlJhDRZTvdrj5BWMN1+i8MRUcAZbQSMTcUgFU+uFsSG7CNbwQTImvtxsobEV5iims2bkD0QSR6uMNfAJJpnL+vXkR6Io7PDJhgNLhEJHaxiy0DCuIWSoAjXKEKU2Ms/8BAskmTKHrWGNLiOh6PyudQKKAiUhYHdzPRTTHQYIcIaYhKEz6CuM4k5+2bwuXrtcg7VchFgt9LUBy3he4cnZQsX9rMFSEOCdf9EliZyKJCY0RT5JB6JEFhD77i5JgE8uWfZyK0MV5pXOc1QgzYZkDw1VCov1PsUXuccfJ9Bem1HMLP3I=
+  file: 
+    - environment-module/environment/target/environment-1.0.0-SNAPSHOT.jar
+  on:
+    tags: true
