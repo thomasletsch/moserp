@@ -39,6 +39,27 @@ public abstract class BigDecimalWrapper<TYPE extends BigDecimalWrapper> extends 
         return fromBigDecimal(value.add(wrapper.value));
     }
 
+    public TYPE multiply(TYPE wrapper) {
+        if(wrapper == null) {
+            return (TYPE) this;
+        }
+        return fromBigDecimal(value.multiply(wrapper.value));
+    }
+
+    public TYPE multiply(Integer multiplicand) {
+        if(multiplicand == null) {
+            return (TYPE) this;
+        }
+        return fromBigDecimal(value.multiply(new BigDecimal(multiplicand)));
+    }
+
+   public TYPE divide(BigDecimal divisor) {
+        if(divisor == null) {
+            return (TYPE) this;
+        }
+        return fromBigDecimal(value.divide(divisor));
+    }
+
     public TYPE negate() {
         return fromBigDecimal(value.negate());
     }

@@ -5,7 +5,7 @@ import org.moserp.common.domain.RestUri;
 import org.moserp.inventory.domain.DeliveryItem;
 import org.moserp.inventory.domain.IncomingDelivery;
 import org.moserp.inventory.domain.OutgoingDelivery;
-import org.moserp.inventory.domain.ProductInstance;
+import org.moserp.product.domain.ProductInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

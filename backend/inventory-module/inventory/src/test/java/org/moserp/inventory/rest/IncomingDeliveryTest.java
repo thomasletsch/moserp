@@ -6,7 +6,7 @@ import org.moserp.common.domain.Quantity;
 import org.moserp.common.domain.RestUri;
 import org.moserp.inventory.domain.DeliveryItem;
 import org.moserp.inventory.domain.IncomingDelivery;
-import org.moserp.inventory.domain.ProductInstance;
+import org.moserp.product.domain.ProductInstance;
 import org.moserp.inventory.repository.DeliveryUtil;
 import org.moserp.inventory.repository.IncomingDeliveryRepository;
 import org.moserp.inventory.repository.InventoryItemUtil;

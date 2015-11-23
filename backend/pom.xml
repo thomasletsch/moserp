@@ -31,7 +31,10 @@
         <module>environment-module</module>
         <module>facility-module</module>
         <module>product-module</module>
+        <module>customer-module</module>
         <module>inventory-module</module>
+        <module>sales-module</module>
+        <module>order-module</module>
         <module>config-server</module>
         <module>eureka-server</module>
     </modules>

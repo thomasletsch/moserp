@@ -1,8 +1,9 @@
-package org.moserp.inventory.domain;
+package org.moserp.product.domain;
 
 import lombok.*;
 import org.moserp.common.annotations.ResourceAssociation;
 import org.moserp.common.domain.DependentEntity;
+import org.moserp.common.domain.Price;
 import org.moserp.common.domain.RestUri;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class ProductInstance extends DependentEntity {
     private RestUri product;
 
     private List<ProductAttributeInstance> attributeInstances = new ArrayList<>();
+
+    private Price retailPrice = Price.ZERO;
 
     @Override
     public String getDisplayName() {

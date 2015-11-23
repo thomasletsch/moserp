@@ -6,6 +6,7 @@ import org.moserp.common.annotations.ValueListKey;
 import org.moserp.common.domain.EntityWithAuditInfo;
 import org.moserp.common.domain.Quantity;
 import org.moserp.common.domain.RestUri;
+import org.moserp.product.domain.ProductInstance;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document

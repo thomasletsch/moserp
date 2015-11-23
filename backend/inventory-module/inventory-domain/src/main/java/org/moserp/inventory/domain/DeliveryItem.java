@@ -3,6 +3,7 @@ package org.moserp.inventory.domain;
 import lombok.*;
 import org.moserp.common.domain.DependentEntity;
 import org.moserp.common.domain.Quantity;
+import org.moserp.product.domain.ProductInstance;
 
 @Getter
 @NoArgsConstructor

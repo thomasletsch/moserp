@@ -1,4 +1,4 @@
-package org.moserp.inventory.domain;
+package org.moserp.product.domain;
 
 import lombok.Data;
 import org.moserp.common.domain.DependentEntity;

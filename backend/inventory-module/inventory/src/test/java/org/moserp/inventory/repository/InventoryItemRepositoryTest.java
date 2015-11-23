@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.moserp.common.domain.RestUri;
 import org.moserp.common.repository.IntegrationTestContext;
 import org.moserp.inventory.domain.InventoryItem;
-import org.moserp.inventory.domain.ProductInstance;
+import org.moserp.product.domain.ProductInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;

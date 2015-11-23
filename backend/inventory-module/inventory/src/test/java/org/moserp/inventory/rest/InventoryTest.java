@@ -6,7 +6,7 @@ import org.moserp.common.domain.Quantity;
 import org.moserp.common.domain.RestUri;
 import org.moserp.inventory.domain.InventoryItem;
 import org.moserp.inventory.domain.InventoryTransfer;
-import org.moserp.inventory.domain.ProductInstance;
+import org.moserp.product.domain.ProductInstance;
 import org.moserp.inventory.repository.InventoryItemUtil;
 import org.moserp.inventory.repository.InventoryTransferUtil;
 import org.springframework.beans.factory.annotation.Autowired;

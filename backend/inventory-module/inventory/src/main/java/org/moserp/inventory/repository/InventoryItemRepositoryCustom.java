@@ -2,7 +2,7 @@ package org.moserp.inventory.repository;
 
 import org.moserp.common.domain.RestUri;
 import org.moserp.inventory.domain.InventoryItem;
-import org.moserp.inventory.domain.ProductInstance;
+import org.moserp.product.domain.ProductInstance;
 
 import java.util.List;
 
