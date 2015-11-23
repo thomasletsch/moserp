@@ -1,0 +1,12 @@
+server:
+  port: 9301
+spring:
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_URL:localhost:27017}/order
+ldap:
+  contextSource:
+    url: ${LDAP_URL}
+    userDn: cn=admin,dc=moserp,dc=org
+    password: ${LDAP_PASSWORD}
+
