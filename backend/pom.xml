@@ -6,11 +6,11 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.0.RC1</version>
+        <version>1.3.0.RELEASE</version>
     </parent>
 
     <groupId>org.moserp</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>backend</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -44,7 +44,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
-                <version>1.3.0.RC1</version>
+                <version>1.3.0.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -58,7 +58,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-parent</artifactId>
-                <version>Brixton.M2</version>
+                <version>Brixton.M3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
