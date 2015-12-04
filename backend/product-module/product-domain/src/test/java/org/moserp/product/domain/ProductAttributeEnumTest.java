@@ -1,8 +1,6 @@
-package org.moserp.product.domain.catalog;
+package org.moserp.product.domain;
 
 import org.junit.Test;
-import org.moserp.product.domain.ProductAttributeEnum;
-import org.moserp.product.domain.ProductAttributeEnumItem;
 
 import java.util.Arrays;
 
