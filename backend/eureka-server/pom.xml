@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>backend</artifactId>
         <groupId>org.moserp</groupId>
@@ -28,6 +27,42 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>keytool-maven-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>Generate Keys</id>
+                        <goals>
+                            <goal>generateKeyPair</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                    </execution>
+                    <execution>
+                        <id>Export Certs</id>
+                        <goals>
+                            <goal>exportCertificate</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <file>${project.build.directory}/selfsigned.cer</file>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <keystore>${project.build.directory}/keystore.jks</keystore>
+                    <dname>cn=moserp.org, ou=None, o=Mos Erp</dname>
+                    <keypass>password</keypass>
+                    <storepass>password</storepass>
+                    <alias>selfsigned</alias>
+                    <sigalg>SHA1withDSA</sigalg>
+                    <ext></ext>
+                    <validity>100</validity>
+                    <keyalg>DSA</keyalg>
+                    <keysize>1024</keysize>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -39,6 +74,20 @@
                     <plugin>
                         <groupId>com.spotify</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <targetPath>/</targetPath>
+                                    <directory>${project.build.directory}</directory>
+                                    <include>selfsigned.cer</include>
+                                </resource>
+                                <resource>
+                                    <targetPath>/</targetPath>
+                                    <directory>${project.build.directory}</directory>
+                                    <include>${project.build.finalName}.jar</include>
+                                </resource>
+                            </resources>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
