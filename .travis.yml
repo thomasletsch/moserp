@@ -2,6 +2,8 @@ language: java
 before_script:
   - mongo mydb_test --eval 'db.addUser("travis", "test");'
 script: mvn -f spring-mvc-logger/pom.xml clean install & mvn -f backend/pom.xml -Pdocker package & mvn -f backend/pom.xml -Pinttest verify
+after_failure:
+  - sudo dmesg
 jdk:
   - oraclejdk8
 services:
