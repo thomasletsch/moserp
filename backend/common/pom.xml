@@ -19,6 +19,7 @@
         <module>common-domain</module>
         <module>common-base</module>
         <module>common-structure</module>
+        <module>common-json-schema</module>
     </modules>
 
     <dependencies>
