@@ -22,6 +22,7 @@
     "angular-mocks": "~1.4.0",
     "angular-route": "~1.4.0",
     "eureka-js-client": "~1.6.1",
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "requirejs": "^2.1.22"
   }
 }

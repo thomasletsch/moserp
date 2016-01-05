@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module('Authentication', []);
+angular.module('Registry', []);
 angular.module('Entities', []);
+angular.module('Authentication', ['Registry']);
 
 // Declare app level module which depends on views, and components
 angular.module('InventoryWeb', [
     'Authentication',
     'Entities',
+    'Registry',
     'ngRoute',
     'ngCookies'
 ]).
@@ -26,7 +28,7 @@ angular.module('InventoryWeb', [
             .otherwise({redirectTo: '/login'});
     }])
 
-    .run(['$rootScope', '$location', '$cookieStore', '$http',
+    .run(['$rootScope', '$location', '$cookieStore', '$http', 'RegistryService',
         function ($rootScope, $location, $cookieStore, $http) {
             // keep user logged in after page refresh
             $rootScope.globals = $cookieStore.get('globals') || {};

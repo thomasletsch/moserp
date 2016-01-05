@@ -3,8 +3,8 @@
 angular.module('Authentication')
 
     .factory('AuthenticationService',
-        ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-            function (Base64, $http, $cookieStore, $rootScope, $timeout) {
+        ['Base64', '$http', '$cookieStore', '$rootScope', 'RegistryService',
+            function (Base64, $http, $cookieStore, $rootScope, RegistryService) {
                 var service = {};
                 service.SetCredentials = function (username, password) {
                     var authdata = Base64.encode(username + ':' + password);
@@ -21,7 +21,8 @@ angular.module('Authentication')
                 };
 
                 service.Login = function (username, password, successCallback, errorCallback) {
-                        $http.post('http://192.168.178.30:9301/login', { username: username, password: password })
+                    console.log("loginUrl: " + RegistryService.LoginUrl());
+                    $http.post(RegistryService.LoginUrl(), {username: username, password: password})
                         .then(function success(response) {
                             console.log("Success login");
                             successCallback(response);
