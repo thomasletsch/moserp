@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LDAP_PASSWORD=Nosfols6
+LDAP_PASSWORD=Ldap!
 EUREKA_PASSWORD=Eureka!
 
 echo Starting Containers
@@ -12,10 +12,14 @@ echo MONGO_URL: ${MONGO_URL}
 sleep 10
 
 # Open LDAP
-# Access the LDAP through: base DN="dc=moserp,dc=org", user DN="cn=admin,dc=moserp,dc=org", password="Nosfols6"
-docker run --name mos_erp_directory -P -e LDAP_ORGANISATION="Mos Erp" -e LDAP_DOMAIN="moserp.org" -e LDAP_ADMIN_PASSWORD=${LDAP_PASSWORD} -d osixia/openldap
-LDAP_URL=ldap://`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mos_erp_directory`:389
+# Access the LDAP through: base DN="dc=moserp,dc=org", user DN="cn=admin,dc=moserp, dc=org", password="Ldap!"
+docker run --name mos_erp_directory -P -e LDAP_ORGANISATION="Mos ERP" -e LDAP_DOMAIN="moserp.org" -e LDAP_ADMIN_PASSWORD=${LDAP_PASSWORD} -d osixia/openldap
+LDAP_URL=ldap://`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mos_erp_directory`
 echo LDAP_URL: ${LDAP_URL}
+# Add initial groups and structures
+ldapadd -x -H ${LDAP_URL} -D cn=admin,dc=moserp,dc=org -w ${LDAP_PASSWORD} -f directory-server/src/main/ldif/setup-ldap.ldif
+# Check with: ldapsearch -x -H ${LDAP_URL} -D "cn=admin,dc=moserp,dc=org" -w ${LDAP_PASSWORD}
+
 sleep 10
 
 # Eureka Service Registry (from https://github.com/spring-cloud-samples/eureka)

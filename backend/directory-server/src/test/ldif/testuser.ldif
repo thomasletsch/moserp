@@ -1,0 +1,15 @@
+dn: uid=testuser,ou=people,dc=moserp,dc=org
+changetype: add
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Test User
+sn: Test
+uid: testuser
+userPassword: test
+
+dn: cn=users,ou=groups,dc=moserp,dc=org
+changetype: modify
+replace: uniqueMember
+uniqueMember: uid=testuser,ou=people,dc=moserp,dc=org
