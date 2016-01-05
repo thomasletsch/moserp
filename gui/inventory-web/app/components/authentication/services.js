@@ -21,9 +21,7 @@ angular.module('Authentication')
                 };
 
                 service.Login = function (username, password, successCallback, errorCallback) {
-                        $http.get('http://192.168.178.30:9301/users/' + username, {
-                                headers: {'Authorization': 'Basic ' + Base64.encode(username + ':' + password)}
-                            })
+                        $http.post('http://192.168.178.30:9301/login', { username: username, password: password })
                         .then(function success(response) {
                             console.log("Success login");
                             successCallback(response);
