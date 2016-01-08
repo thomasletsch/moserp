@@ -17,6 +17,9 @@ function LoginController($scope, $rootScope, $location, AuthenticationService) {
             $scope.dataLoading = false;
         });
     };
+    $scope.logout = function () {
+        AuthenticationService.Logout();
+    }
 }
 
 export default [

@@ -46,27 +46,18 @@ angular
                 console.log("init $urlRouterProvider");
                 $urlRouterProvider.otherwise("/login");
                 $stateProvider
-                    .state('login', {
-                        url: "/login",
-                        templateUrl: "src/authentication/view/login.html",
-                        controller: LoginController
-                    })
                     .state('home', {
                         url: "/",
                         templateUrl: "src/home/view/home.html",
-                        controller: HomeController
+                        controller: HomeController,
+                        views: {
+                            "login": {
+                                templateUrl: "src/authentication/view/login.html",
+                                controller: LoginController
+                            }
+                        }
                     })
-            })
-        //.run(['$rootScope', '$location', '$cookieStore', '$http', 'RegistryService',
-        //    function ($rootScope, $location, $cookieStore, $http) {
-        //        // keep user logged in after page refresh
-        //        $rootScope.globals = $cookieStore.get('globals') || {};
-        //        if ($rootScope.globals.currentUser) {
-        //            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
-        //        }
-        //
-        //    }])
-            ;
+            });
 
         angular.bootstrap(body, [appName], {strictDi: false})
     });

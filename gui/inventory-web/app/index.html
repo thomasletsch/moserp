@@ -2,26 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
-
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-
+    <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap-3/css/bootstrap.min.css">
     <title>Lagerverwaltung</title>
-
-    <style type="text/css">
-        /**
-         * Hide when Angular is not yet loaded and initialized
-         */
-        [ng-cloak] {
-            display: none;
-        }
-    </style>
 </head>
 
-<body ng-cloak layout="column">
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" ui-sref="home">Home</a>
+        </div>
+        <div ui-view="login" class="container"></div>
+    </div>
+</nav>
 
 <div ui-view></div>
 

@@ -1,20 +1,5 @@
 function AuthenticationService($http, $cookieStore, $rootScope, RegistryService, StructureService) {
     var service = {};
-    service.SetCredentials = function (username, password) {
-        console.log("setting credentials");
-        var authdata = encode(username + ':' + password);
-
-        $rootScope.globals = {
-            currentUser: {
-                username: username,
-                authdata: authdata
-            }
-        };
-
-        $http.defaults.headers.common.Authorization = 'Basic ' + authdata; // jshint ignore:line
-        $cookieStore.put('globals', $rootScope.globals);
-        $http.defaults.headers.common.Accept = 'application/json';
-    };
 
     service.Login = function (username, password, successCallback, errorCallback) {
         console.log("loginUrl: " + RegistryService.LoginUrl());
@@ -30,6 +15,34 @@ function AuthenticationService($http, $cookieStore, $rootScope, RegistryService,
             });
 
     };
+
+    service.Logout = function () {
+        service.ClearCredentials();
+    }
+
+    service.SetCredentials = function (username, password) {
+        console.log("setting credentials");
+        var authData = encode(username + ':' + password);
+
+        $rootScope.globals = {
+            currentUser: {
+                username: username,
+                authData: authData
+            }
+        };
+
+        $http.defaults.headers.common.Authorization = 'Basic ' + authData; // jshint ignore:line
+        $cookieStore.put('globals', $rootScope.globals);
+        $http.defaults.headers.common.Accept = 'application/json';
+    };
+
+    service.ReadCredentials = function () {
+        $rootScope.globals = $cookieStore.get('globals') || {};
+        if ($rootScope.globals.currentUser) {
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authData; // jshint ignore:line
+        }
+        $http.defaults.headers.common.Accept = 'application/json';
+    }
 
     service.ClearCredentials = function () {
         $rootScope.globals = {};
