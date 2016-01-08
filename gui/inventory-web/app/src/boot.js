@@ -11,6 +11,9 @@ import 'angular-ui-router'
 import 'angular-ui-bootstrap'
 import LoginController from 'authentication/LoginController'
 import HomeController from 'home/HomeController'
+import 'entities/Entities'
+import 'angular-schema-form'
+import 'angular-schema-form-bootstrap'
 
 // Load custom application modules
 
@@ -37,7 +40,7 @@ angular
 
         let body = document.getElementsByTagName("body")[0];
         let app = angular
-            .module(appName, ['ui.router', 'ui.bootstrap', main])
+            .module(appName, ['ui.router', 'ui.bootstrap', 'schemaForm', main])
             .config(['$provide', LogDecorator])
             .config(function ($stateProvider, $urlRouterProvider) {
                 console.log("init $urlRouterProvider");
@@ -54,15 +57,15 @@ angular
                         controller: HomeController
                     })
             })
-            //.run(['$rootScope', '$location', '$cookieStore', '$http', 'RegistryService',
-            //    function ($rootScope, $location, $cookieStore, $http) {
-            //        // keep user logged in after page refresh
-            //        $rootScope.globals = $cookieStore.get('globals') || {};
-            //        if ($rootScope.globals.currentUser) {
-            //            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
-            //        }
-            //
-            //    }])
+        //.run(['$rootScope', '$location', '$cookieStore', '$http', 'RegistryService',
+        //    function ($rootScope, $location, $cookieStore, $http) {
+        //        // keep user logged in after page refresh
+        //        $rootScope.globals = $cookieStore.get('globals') || {};
+        //        if ($rootScope.globals.currentUser) {
+        //            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+        //        }
+        //
+        //    }])
             ;
 
         angular.bootstrap(body, [appName], {strictDi: false})

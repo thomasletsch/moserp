@@ -2,6 +2,7 @@ function StructureService(EurekaClient, $http, $rootScope) {
     return {
         loadResources: function () {
             $rootScope.resources = {};
+            $rootScope.schemata = {};
             var allServices = EurekaClient.getInstancesWithPostfix("MOSERP.ORG");
             for (let serviceUrl of allServices) {
                 console.log("URL " + serviceUrl);
@@ -23,13 +24,14 @@ function StructureService(EurekaClient, $http, $rootScope) {
             }
         },
         listResources: function () {
-            var resources;
-            for(let singleResource in $rootScope.resources){
-                var resource;
+            var resources = [];
+            for (let singleResource in $rootScope.resources) {
+                var resource = {};
                 resource.name = singleResource;
                 resource.uri = $rootScope.resources[singleResource];
                 resources.push(resource);
             }
+            console.log("listResources: " + resources);
             return resources;
         },
         getUriForResource: function (resourceId) {
@@ -41,7 +43,6 @@ function StructureService(EurekaClient, $http, $rootScope) {
 function loadSchema($http, $rootScope, serviceUrl, resourceName) {
     $http.get(serviceUrl + '/schema/' + resourceName).then(function success(response) {
         console.log("Adding schema to " + resourceName);
-        $rootScope.schemata = {};
         $rootScope.schemata[resourceName] = response.data;
         console.log("Added schema to " + resourceName + ": " + JSON.stringify($rootScope.schemata[resourceName]));
     });

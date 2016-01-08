@@ -9,4 +9,4 @@ let $log = new ExternalLogger();
 $log = $log.getInstance( "BOOTSTRAP" );
 $log.debug( "Configuring 'main' module" );
 
-export default angular.module('main', [registry, structure, authentication] ).name;
+export default angular.module('main', [registry, structure, authentication, entities] ).name;
