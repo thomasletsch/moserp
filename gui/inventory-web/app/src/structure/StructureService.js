@@ -15,9 +15,10 @@ function StructureService(EurekaClient, $http, $rootScope) {
                             console.log("Link: " + JSON.stringify(link));
                             var resourceUri = link['href'];
                             var resourceName = link['rel'];
-                            $rootScope.resources[resourceName] = resourceUri;
-                            $rootScope.resourceGroups[group][resourceName] = resourceUri;
+                            //$rootScope.resources[resourceName] = resourceUri;
+                            //$rootScope.resourceGroups[group][resourceName] = resourceUri;
                             loadSchema($http, $rootScope, serviceUrl, resourceName);
+                            loadResourceUris($http, $rootScope, group, resourceName, resourceUri);
                         }
                     }
                 });
@@ -25,10 +26,10 @@ function StructureService(EurekaClient, $http, $rootScope) {
         },
         listResources: function () {
             var resources = [];
-            for (let singleResource in $rootScope.resources) {
+            for (let resourceName in $rootScope.resources) {
                 var resource = {};
-                resource.name = singleResource;
-                resource.uri = $rootScope.resources[singleResource];
+                resource.name = resourceName;
+                resource.uri = $rootScope.resources[resourceName];
                 resources.push(resource);
             }
             console.log("listResources: " + resources);
@@ -45,6 +46,15 @@ function loadSchema($http, $rootScope, serviceUrl, resourceName) {
         console.log("Adding schema to " + resourceName);
         $rootScope.schemata[resourceName] = response.data;
         console.log("Added schema to " + resourceName + ": " + JSON.stringify($rootScope.schemata[resourceName]));
+    });
+}
+
+function loadResourceUris($http, $rootScope, group, resourceName, resourceUri) {
+    $http.get(resourceUri).then(function success(response) {
+        console.log("Adding uri to " + resourceName);
+        $rootScope.resources[resourceName] = response.data.uri;
+        $rootScope.resourceGroups[group][resourceName] = response.data.uri;
+        console.log("Added uri to " + resourceName + ": " + $rootScope.resources[resourceName]);
     });
 }
 

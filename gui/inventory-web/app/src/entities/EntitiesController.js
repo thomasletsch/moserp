@@ -1,13 +1,27 @@
-/**
- * Main App Controller for the Angular Material Starter App
- * @constructor
- */
-function EntitiesController(StructureService, $log, $rootScope, $scope) {
+function EntitiesController(EntitiesRepository, $log, $rootScope, $scope, $state, $stateParams) {
 
     $log = $log.getInstance("SessionController");
     $log.debug("instanceOf() ");
 
-    showForm();
+    //showForm();
+
+    $scope.$state = $state;
+
+    $scope.entity = $stateParams.entity;
+
+    $scope.resources = $rootScope.resources;
+
+    if($stateParams.entity) {
+        if($stateParams.id) {
+
+        } else {
+            EntitiesRepository.loadAll($stateParams.entity, function success(entities) {
+                console.log("Entites returned: " + JSON.stringify(entities));
+                $scope.entities = entities;
+            });
+        }
+
+    }
 
 
     function showForm() {
@@ -28,6 +42,6 @@ function EntitiesController(StructureService, $log, $rootScope, $scope) {
 }
 
 export default [
-    'StructureService', '$log', '$rootScope', '$scope',
+    'EntitiesRepository', '$log', '$rootScope', '$scope', '$state', '$stateParams',
     EntitiesController
 ];

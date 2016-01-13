@@ -7,10 +7,17 @@ function EurekaClient($http, $rootScope) {
         }
     }).then(function success(response) {
         console.log("Successful retrieved registry ");
+        var applications = response.data.applications.application;
+        console.log("Successful retrieved registry " + JSON.stringify(applications));
         $rootScope.registryContent = [];
-        for (let application of response.data.applications.application) {
-            $rootScope.registryContent[application.name] = 'http://' + application.instance.hostName + ':' + application.instance.port.$;
-            console.log("Application: " + application.name + " url: " + $rootScope.registryContent[application.name]);
+        if (applications instanceof Array) {
+            for (let application of applications) {
+                $rootScope.registryContent[application.name] = 'http://' + application.instance.hostName + ':' + application.instance.port.$;
+                console.log("Application: " + application.name + " url: " + $rootScope.registryContent[application.name]);
+            }
+        } else {
+            $rootScope.registryContent[applications.name] = 'http://' + applications.instance.hostName + ':' + applications.instance.port.$;
+            console.log("Application: " + applications.name + " url: " + $rootScope.registryContent[applications.name]);
         }
 
     }, function error(response) {

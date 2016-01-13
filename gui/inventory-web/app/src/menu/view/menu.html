@@ -1,0 +1,12 @@
+<ul class="nav nav-list" ng-controller="MenuController">
+    <li><label class="tree-toggle nav-header">Menu</label>
+        <ul class="nav nav-list tree">
+            <li ng-repeat="(groupName, group) in resourceGroups">{{groupName}}
+                <ul>
+                    <li ng-repeat="(resourceName, resourceUrl) in group"> <a ng-href="#/entities/{{resourceName}}">{{resourceName}}</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </li>
+</ul>

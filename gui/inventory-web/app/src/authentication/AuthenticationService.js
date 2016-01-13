@@ -16,9 +16,13 @@ function AuthenticationService($http, $cookieStore, $rootScope, RegistryService,
 
     };
 
+    service.isLoggedIn = function() {
+        return (typeof $rootScope.globals !== 'undefined') && (typeof $rootScope.globals.currentUser !== 'undefined');
+    };
+
     service.Logout = function () {
         service.ClearCredentials();
-    }
+    };
 
     service.SetCredentials = function (username, password) {
         console.log("setting credentials");
@@ -26,7 +30,7 @@ function AuthenticationService($http, $cookieStore, $rootScope, RegistryService,
 
         $rootScope.globals = {
             currentUser: {
-                username: username,
+                userName: username,
                 authData: authData
             }
         };
@@ -42,7 +46,7 @@ function AuthenticationService($http, $cookieStore, $rootScope, RegistryService,
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authData; // jshint ignore:line
         }
         $http.defaults.headers.common.Accept = 'application/json';
-    }
+    };
 
     service.ClearCredentials = function () {
         $rootScope.globals = {};

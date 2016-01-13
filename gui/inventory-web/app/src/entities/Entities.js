@@ -1,5 +1,5 @@
 import EntitiesController from 'entities/EntitiesController'
-import EntitiesService    from 'entities/EntitiesDataservice'
+import EntitiesRepository    from 'entities/EntitiesRepository'
 
 import { ExternalLogger } from 'utils/LogDecorator';
 
@@ -11,7 +11,7 @@ $log.debug("Configuring 'entities' module");
 
 let moduleName = angular
     .module("entities", [])
-    .service("entitiesService", EntitiesService)
+    .service("EntitiesRepository", EntitiesRepository)
     .controller("EntitiesController", EntitiesController)
     .config(function ($stateProvider, $urlRouterProvider) {
         console.log("init $urlRouterProvider inside entities");

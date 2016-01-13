@@ -2,14 +2,15 @@
  * Login Controller
  * @constructor
  */
-function LoginController($scope, $rootScope, $location, AuthenticationService) {
+function LoginController($scope, $rootScope, $state, AuthenticationService) {
     // reset login status
     AuthenticationService.ClearCredentials();
 
     $scope.login = function () {
         $scope.dataLoading = true;
         AuthenticationService.Login($scope.username, $scope.password, function (response) {
-            $location.path('/');
+            $scope.user = $rootScope.globals.userName;
+            $state.go("entities");
             $scope.dataLoading = false;
         }, function (response) {
             console.log("setting error message");
@@ -23,6 +24,6 @@ function LoginController($scope, $rootScope, $location, AuthenticationService) {
 }
 
 export default [
-    '$scope', '$rootScope', '$location', 'AuthenticationService',
+    '$scope', '$rootScope', '$state', 'AuthenticationService',
     LoginController
 ];
