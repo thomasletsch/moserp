@@ -5,4 +5,4 @@ keytool -genkey -keyalg RSA -alias selfsigned -dname "cn=Test Cert, ou=MOSERP, o
 keytool -export -keystore keystore.jks -storepass password -keypass password -alias selfsigned -file selfsigned.cer
 
 
-keytool -import -file selfsigned.cer -alias selfsigned -keystore truststore.jks -storepass password -keypass password
+keytool -import -noprompt -file selfsigned.cer -alias selfsigned -keystore truststore.jks -storepass password -keypass password

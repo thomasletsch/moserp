@@ -64,7 +64,7 @@ public class JsonSchemaBuilder {
             }
         }
         log.debug("No factory found for " + context.getDefinition().getName() + ". Using default.");
-        return defaultJsonSchemaPropertyFactory;
+        return null;
     }
 
 }

@@ -19,11 +19,7 @@ public class SimpleJsonSchemaPropertyFactory extends BasicPropertyFactory {
     @Override
     public boolean appliesTo(PropertyFactoryContext context) {
         return !isAnnotationPresent(context, ValueListKey.class) && !isAnnotationPresent(context, ResourceAssociation.class)
-                && calculatePropertyType(context) != null && !isLink(context);
-    }
-
-    private boolean isLink(PropertyFactoryContext context) {
-        return context.getDefinition().getName().equals("_links");
+                && calculatePropertyType(context) != null;
     }
 
     @Override

@@ -1,16 +1,21 @@
 server:
   port: 8761
-  ssl:
-    key-store: eureka-server/keystore.jks
-    key-store-password: password
-    key-password: password
-    clientAuth: want
 eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
   server:
     waitTimeInMsWhenSyncEmpty: 0
+---
+spring:
+  profiles: test
+security:
+  basic:
+    enabled: false
+
+---
+spring:
+  profiles: prod
 security:
   basic:
     enabled: true
@@ -19,10 +24,8 @@ security:
       password: ${EUREKA_PASSWORD}
 
 ---
-
 spring:
-  profiles:
-    active: ssl
+  profiles: ssl
 server:
   ssl:
     key-store: eureka-server/keystore.jks
