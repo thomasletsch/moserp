@@ -1,7 +1,7 @@
 var IGNORE_PROPERTIES = ["links", "displayName"];
-function EntitiesController(EntitiesRepository, $log, $rootScope, $scope, $state, $location, $stateParams, uiGridConstants) {
+function EntitiesListController(EntitiesRepository, $log, $rootScope, $scope, $state, $location, $stateParams, uiGridConstants) {
 
-    $log = $log.getInstance("EntitiesController(" + JSON.stringify($stateParams) + ")");
+    $log = $log.getInstance("EntitiesListController(" + JSON.stringify($stateParams) + ")");
     $log.debug("instanceOf() ");
 
     $scope.$state = $state;
@@ -19,7 +19,7 @@ function EntitiesController(EntitiesRepository, $log, $rootScope, $scope, $state
         console.log("Registered gridApi");
         gridApi.selection.on.rowSelectionChanged($scope, function (row) {
             var selection = gridApi.selection.getSelectedRows();
-            if(selection.length > 0) {
+            if (selection.length > 0) {
                 $scope.selectedObject = selection[0];
             } else {
                 $scope.selectedObject = null;
@@ -29,13 +29,13 @@ function EntitiesController(EntitiesRepository, $log, $rootScope, $scope, $state
     };
 
     $scope.createNew = function () {
-        $state.go("entities.edit", {entity: $scope.entityName});
+        $state.go("entities.edit", {entityName: $scope.entityName});
     };
 
     $scope.edit = function () {
         if ($scope.selectedObject) {
             console.log("Edit: " + $scope.entityName + " - " + $scope.selectedObject.id);
-            $state.go("entities.edit", {entity: $scope.entityName, id: $scope.selectedObject.id});
+            $state.go("entities.edit", {entityName: $scope.entityName, id: $scope.selectedObject.id});
         }
     };
 
@@ -46,31 +46,14 @@ function EntitiesController(EntitiesRepository, $log, $rootScope, $scope, $state
     };
 
 
-    if ($state.is("entities.list")) {
-        EntitiesRepository.loadAll($stateParams.entity, entitiesLoaded);
-    } else {
-        if ($stateParams.id) {
-            EntitiesRepository.find($stateParams.entity, $stateParams.id, entityLoaded);
-        } else {
-            newEntity();
-        }
-    }
+    EntitiesRepository.loadAll($scope.entityName, entitiesLoaded);
 
-
-    function newEntity() {
-        prepareEditForm({});
-    }
 
     function entitiesLoaded(entities) {
         console.log("Entites returned: " + JSON.stringify(entities));
         $scope.entities = entities;
-        $scope.gridOptions.columnDefs = createColumnDefs($stateParams.entity);
+        $scope.gridOptions.columnDefs = createColumnDefs($scope.entityName);
         $scope.gridOptions.data = entities;
-    }
-
-    function entityLoaded(entity) {
-        console.log("Entity returned: " + JSON.stringify(entity));
-        prepareEditForm(entity);
     }
 
     function createColumnDefs(entityName) {
@@ -85,25 +68,10 @@ function EntitiesController(EntitiesRepository, $log, $rootScope, $scope, $state
         return columnDefs;
     }
 
-    function prepareEditForm(model) {
-        console.log("Schema: " + JSON.stringify($rootScope.schemata[$scope.entity]));
-        $scope.schema = $rootScope.schemata[$scope.entity];
-
-        $scope.form = [
-            "*",
-            {
-                type: "submit",
-                title: "Save"
-            }
-        ];
-
-        $scope.model = model;
-    }
-
 }
 
 
 export default [
     'EntitiesRepository', '$log', '$rootScope', '$scope', '$state', '$location', '$stateParams', 'uiGridConstants',
-    EntitiesController
+    EntitiesListController
 ];

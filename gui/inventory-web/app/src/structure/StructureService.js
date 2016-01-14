@@ -15,8 +15,6 @@ function StructureService(EurekaClient, $http, $rootScope) {
                             console.log("Link: " + JSON.stringify(link));
                             var resourceUri = link['href'];
                             var resourceName = link['rel'];
-                            //$rootScope.resources[resourceName] = resourceUri;
-                            //$rootScope.resourceGroups[group][resourceName] = resourceUri;
                             loadSchema($http, $rootScope, serviceUrl, resourceName);
                             loadResourceUris($http, $rootScope, group, resourceName, resourceUri);
                         }
