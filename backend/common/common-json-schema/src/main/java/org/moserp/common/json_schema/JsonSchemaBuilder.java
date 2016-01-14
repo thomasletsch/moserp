@@ -36,11 +36,11 @@ public class JsonSchemaBuilder {
         BusinessEntity entity = new BusinessEntity();
         entity.setTitle(domainType.getSimpleName());
         entity.setType("object");
-        entity.setProperties(buildProperties(domainType));
+        populateProperties(domainType, entity);
         return entity;
     }
 
-    private Map<String, EntityProperty> buildProperties(Class<?> domainType) {
+    private void populateProperties(Class<?> domainType, BusinessEntity entity) {
         Map<String, EntityProperty> properties = new HashMap<>();
         final PersistentEntity<?, ?> persistentEntity = persistentEntities.getPersistentEntity(domainType);
         JacksonMetadata jacksonMetadata = new JacksonMetadata(objectMapper, domainType);
@@ -49,10 +49,14 @@ public class JsonSchemaBuilder {
             PropertyFactoryContext context = new PropertyFactoryContext(definition, jacksonMetadata, persistentProperty);
             PropertyFactory factory = getFactoryFor(context);
             if (factory != null) {
-                properties.put(definition.getInternalName(), factory.create(context));
+                EntityProperty property = factory.create(context);
+                properties.put(definition.getInternalName(), property);
+                if(property.isRequired()) {
+                    entity.getRequired().add(definition.getInternalName());
+                }
             }
         }
-        return properties;
+        entity.setProperties(properties);
     }
 
     private PropertyFactory getFactoryFor(PropertyFactoryContext context) {

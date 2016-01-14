@@ -15,6 +15,7 @@ public class EntityProperty {
     private String format;
     private Boolean readOnly;
     private String type;
+    private transient boolean required;
 
     /**
      * For select etc. types

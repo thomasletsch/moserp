@@ -28,7 +28,7 @@ public abstract class BasicPropertyFactory implements PropertyFactory {
     protected EntityProperty createPropertyWithBasicValues(PropertyFactoryContext context) {
         EntityProperty property = new EntityProperty();
         property.setTitle(context.getDefinition().getName());
-//        property.setRequired(context.getDefinition().isRequired());
+        property.setRequired(context.getDefinition().isRequired());
         property.setReadOnly(isReadonly(context));
         return property;
     }
