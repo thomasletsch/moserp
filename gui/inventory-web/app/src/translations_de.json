@@ -1,4 +1,7 @@
 {
+  "org.moserp.environment" : "Allgemeines",
+  "org.moserp.product" : "Produkte",
+
   "shipments" : "Lieferungen",
   "incomingDeliveries" : "Eingehende Lieferung",
   "outgoingDeliveries" : "Ausgehende Lieferung",
@@ -67,6 +70,7 @@
 
   "ok":"Ok",
   "cancel":"Abbrechen",
+  "save": "Speichern",
 
   "":""
 }

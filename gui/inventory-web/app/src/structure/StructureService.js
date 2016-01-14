@@ -3,13 +3,13 @@ function StructureService(EurekaClient, $http, $rootScope) {
         loadResources: function () {
             $rootScope.resources = {};
             $rootScope.schemata = {};
+            $rootScope.resourceGroups = {};
             var allServices = EurekaClient.getInstancesWithPostfix("MOSERP.ORG");
             for (let serviceUrl of allServices) {
                 console.log("URL " + serviceUrl);
                 $http.get(serviceUrl + '/structure').then(function success(response) {
                     for (let group in response.data) {
                         console.log("Group: " + group);
-                        $rootScope.resourceGroups = {};
                         $rootScope.resourceGroups[group] = {};
                         for (let link of response.data[group].links) {
                             console.log("Link: " + JSON.stringify(link));
@@ -53,6 +53,7 @@ function loadResourceUris($http, $rootScope, group, resourceName, resourceUri) {
         $rootScope.resources[resourceName] = response.data.uri;
         $rootScope.resourceGroups[group][resourceName] = response.data.uri;
         console.log("Added uri to " + resourceName + ": " + $rootScope.resources[resourceName]);
+        $rootScope.$broadcast('resourcesChanged');
     });
 }
 

@@ -1,4 +1,4 @@
-var IGNORE_PROPERTIES = ["links", "displayName"];
+var IGNORE_PROPERTIES = ["links", "displayName", "version"];
 function EntitiesListController(EntitiesRepository, $log, $rootScope, $scope, $state, $location, $stateParams, uiGridConstants) {
 
     $log = $log.getInstance("EntitiesListController(" + JSON.stringify($stateParams) + ")");
@@ -61,7 +61,7 @@ function EntitiesListController(EntitiesRepository, $log, $rootScope, $scope, $s
         for (let propertyName in $rootScope.schemata[entityName].properties) {
             var column = {};
             column.name = propertyName;
-            if (IGNORE_PROPERTIES.indexOf(entityName) < 0) {
+            if (IGNORE_PROPERTIES.indexOf(propertyName) < 0) {
                 columnDefs.push(column);
             }
         }
