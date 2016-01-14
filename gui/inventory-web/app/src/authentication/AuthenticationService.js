@@ -1,16 +1,16 @@
-function AuthenticationService($http, $cookieStore, $rootScope, RegistryService, StructureService) {
+function AuthenticationService($log, $http, $cookieStore, $rootScope, RegistryService, StructureService) {
     var service = {};
 
     service.Login = function (username, password, successCallback, errorCallback) {
-        console.log("loginUrl: " + RegistryService.LoginUrl());
+        $log.debug("loginUrl: " + RegistryService.LoginUrl());
         $http.post(RegistryService.LoginUrl(), {username: username, password: password})
             .then(function success(response) {
-                console.log("Success login");
+                $log.debug("Success login");
                 service.SetCredentials(username, password);
                 StructureService.loadResources();
                 successCallback(response);
             }, function error(response) {
-                console.log("Error login");
+                $log.debug("Error login");
                 errorCallback(response);
             });
 
@@ -25,7 +25,7 @@ function AuthenticationService($http, $cookieStore, $rootScope, RegistryService,
     };
 
     service.SetCredentials = function (username, password) {
-        console.log("setting credentials");
+        $log.debug("setting credentials");
         var authData = encode(username + ':' + password);
 
         $rootScope.globals = {
@@ -135,4 +135,4 @@ function decode(input) {
     return output;
 }
 
-export default ['$http', '$cookieStore', '$rootScope', 'RegistryService', 'StructureService', AuthenticationService];
+export default ['$log', '$http', '$cookieStore', '$rootScope', 'RegistryService', 'StructureService', AuthenticationService];

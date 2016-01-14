@@ -1,4 +1,4 @@
-function StructureService(EurekaClient, $http, $rootScope) {
+function StructureService($log, $http, $rootScope, EurekaClient) {
     return {
         loadResources: function () {
             $rootScope.resources = {};
@@ -6,17 +6,17 @@ function StructureService(EurekaClient, $http, $rootScope) {
             $rootScope.resourceGroups = {};
             var allServices = EurekaClient.getInstancesWithPostfix("MOSERP.ORG");
             for (let serviceUrl of allServices) {
-                console.log("URL " + serviceUrl);
+                $log.debug("URL " + serviceUrl);
                 $http.get(serviceUrl + '/structure').then(function success(response) {
                     for (let group in response.data) {
-                        console.log("Group: " + group);
+                        $log.debug("Group: " + group);
                         $rootScope.resourceGroups[group] = {};
                         for (let link of response.data[group].links) {
-                            console.log("Link: " + JSON.stringify(link));
+                            $log.debug("Link: " + JSON.stringify(link));
                             var resourceUri = link['href'];
                             var resourceName = link['rel'];
-                            loadSchema($http, $rootScope, serviceUrl, resourceName);
-                            loadResourceUris($http, $rootScope, group, resourceName, resourceUri);
+                            loadSchema(serviceUrl, resourceName);
+                            loadResourceUris(group, resourceName, resourceUri);
                         }
                     }
                 });
@@ -30,31 +30,30 @@ function StructureService(EurekaClient, $http, $rootScope) {
                 resource.uri = $rootScope.resources[resourceName];
                 resources.push(resource);
             }
-            console.log("listResources: " + resources);
+            $log.debug("listResources: " + resources);
             return resources;
         },
         getUriForResource: function (resourceId) {
             return $rootScope.resources[resourceId];
         }
     }
-};
+    function loadSchema(serviceUrl, resourceName) {
+        $http.get(serviceUrl + '/schema/' + resourceName).then(function success(response) {
+            $log.debug("Adding schema to " + resourceName);
+            $rootScope.schemata[resourceName] = response.data;
+            $log.debug("Added schema to " + resourceName + ": " + JSON.stringify($rootScope.schemata[resourceName]));
+        });
+    }
 
-function loadSchema($http, $rootScope, serviceUrl, resourceName) {
-    $http.get(serviceUrl + '/schema/' + resourceName).then(function success(response) {
-        console.log("Adding schema to " + resourceName);
-        $rootScope.schemata[resourceName] = response.data;
-        console.log("Added schema to " + resourceName + ": " + JSON.stringify($rootScope.schemata[resourceName]));
-    });
+    function loadResourceUris(group, resourceName, resourceUri) {
+        $http.get(resourceUri).then(function success(response) {
+            $log.debug("Adding uri to " + resourceName);
+            $rootScope.resources[resourceName] = response.data.uri;
+            $rootScope.resourceGroups[group][resourceName] = response.data.uri;
+            $log.debug("Added uri to " + resourceName + ": " + $rootScope.resources[resourceName]);
+            $rootScope.$broadcast('resourcesChanged');
+        });
+    }
 }
 
-function loadResourceUris($http, $rootScope, group, resourceName, resourceUri) {
-    $http.get(resourceUri).then(function success(response) {
-        console.log("Adding uri to " + resourceName);
-        $rootScope.resources[resourceName] = response.data.uri;
-        $rootScope.resourceGroups[group][resourceName] = response.data.uri;
-        console.log("Added uri to " + resourceName + ": " + $rootScope.resources[resourceName]);
-        $rootScope.$broadcast('resourcesChanged');
-    });
-}
-
-export default ['EurekaClient', '$http', '$rootScope', StructureService];
+export default ['$log', '$http', '$rootScope', 'EurekaClient', StructureService];

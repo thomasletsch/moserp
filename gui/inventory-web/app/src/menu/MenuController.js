@@ -1,4 +1,4 @@
-function MenuController($rootScope, $scope, $state, $translate, $stateParams) {
+function MenuController($log, $rootScope, $scope, $state, $translate, $stateParams) {
     $scope.$state = $state;
     $scope.entity = $stateParams.entity;
 
@@ -11,12 +11,12 @@ function MenuController($rootScope, $scope, $state, $translate, $stateParams) {
     function recreateMenu() {
         $scope.menu = [];
         for (var groupName in $rootScope.resourceGroups) {
-            console.log("Menu group: " + groupName);
+            $log.debug("Menu group: " + groupName);
             var menuEntry = {};
             menuEntry.label = groupName;
             menuEntry.items = [];
             for (var resourceName in $rootScope.resourceGroups[groupName]) {
-                console.log("Menu item: " + resourceName);
+                $log.debug("Menu item: " + resourceName);
                 var menuItem = {};
                 menuItem.key = resourceName;
                 menuItem.label = resourceName;
@@ -34,11 +34,11 @@ function MenuController($rootScope, $scope, $state, $translate, $stateParams) {
                 });
             });
         });
-        console.log("Menu: " + JSON.stringify($scope.menu));
+        $log.debug("Menu: " + JSON.stringify($scope.menu));
     }
 }
 
 
-export default ['$rootScope', '$scope', '$state', '$translate', '$stateParams',
+export default ['$log', '$rootScope', '$scope', '$state', '$translate', '$stateParams',
     MenuController
 ];

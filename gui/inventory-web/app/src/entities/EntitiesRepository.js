@@ -1,14 +1,8 @@
 /**
  * Entities DataService
- * Uses embedded, hard-coded data model; acts asynchronously to simulate
- * remote data service call(s).
- *
- * @returns {{loadAll: Function}}
- * @constructor
  */
 function EntitiesRepository($log, $rootScope, $http) {
-    $log = $log.getInstance("EntitiesRepository");
-    $log.debug("instanceOf() ");
+    $log.debug("EntitiesRepository");
 
     // Promise-based API
     return {
@@ -21,7 +15,7 @@ function EntitiesRepository($log, $rootScope, $http) {
             $http.get(url).then(function success(response) {
                 var data = response.data;
                 data.version = response.headers("ETag").replace(/"/g, '');
-                console.log("Version " + data.version);
+                $log.debug("Version " + data.version);
                 successCallback(data);
             });
         },

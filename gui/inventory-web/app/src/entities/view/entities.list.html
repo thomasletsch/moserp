@@ -1,4 +1,4 @@
 <button type="button" class="btn btn-default btn-sm" ng-click="createNew()">Neu</button>
-<button type="button" class="btn btn-default btn-sm" ng-click="edit()">Bearbeiten</button>
+<button type="button" class="btn btn-default btn-sm" ng-click="edit()" ng-hide="!selectedObject">Bearbeiten</button>
 <div>Entity: {{entity}}</div>
 <div id="entities" ui-grid="gridOptions" ng-if="gridOptions" class="grid" ui-grid-selection></div>

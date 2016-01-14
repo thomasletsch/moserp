@@ -1,7 +1,5 @@
 function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $state, $translate, $stateParams, uiGridConstants) {
-
-    $log = $log.getInstance("EntitiesEditController(" + JSON.stringify($stateParams) + ")");
-    $log.debug("instanceOf() ");
+    $log.debug("EntitiesEditController(" + JSON.stringify($stateParams) + ")");
 
     $scope.$state = $state;
     $scope.entityName = $stateParams.entityName;
@@ -14,12 +12,12 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
     }
 
     function entityLoaded(entity) {
-        console.log("Entity returned: " + JSON.stringify(entity));
+        $log.debug("Entity returned: " + JSON.stringify(entity));
         $scope.model = entity;
     }
 
      function prepareEditForm() {
-        console.log("Schema: " + JSON.stringify($rootScope.schemata[$scope.entityName]));
+        $log.debug("Schema: " + JSON.stringify($rootScope.schemata[$scope.entityName]));
         $scope.schema = $rootScope.schemata[$scope.entityName];
 
         if (FORM_FIELDS[$scope.entityName]) {
@@ -38,19 +36,19 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
         });
 
         $scope.onSubmit = function (form) {
-            console.log("Submitting...");
+            $log.debug("Submitting...");
             // First we broadcast an event so all fields validate themselves
             $scope.$broadcast('schemaFormValidate');
 
             // Then we check if the form is valid
             //if (form.$valid) {
-            console.log("Form valid");
+            $log.debug("Form valid");
             EntitiesRepository.save($scope.entityName, $scope.entityId, $scope.model, function success() {
-                console.log("Successful saved");
+                $log.debug("Successful saved");
             });
             //} else {
-            //    console.log("Form not valid");
-            //    console.log("Model: " + JSON.stringify($scope.model));
+            //    $log.debug("Form not valid");
+            //    $log.debug("Model: " + JSON.stringify($scope.model));
             //}
         }
     }

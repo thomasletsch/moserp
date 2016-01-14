@@ -1,8 +1,7 @@
 var IGNORE_PROPERTIES = ["links", "displayName", "version"];
-function EntitiesListController(EntitiesRepository, $log, $rootScope, $scope, $state, $location, $stateParams, uiGridConstants) {
+function EntitiesListController($log, $rootScope, $scope, $state, $stateParams, EntitiesRepository) {
 
-    $log = $log.getInstance("EntitiesListController(" + JSON.stringify($stateParams) + ")");
-    $log.debug("instanceOf() ");
+    $log.debug("EntitiesListController(" + JSON.stringify($stateParams) + ")");
 
     $scope.$state = $state;
     $scope.entityName = $stateParams.entityName;
@@ -16,7 +15,7 @@ function EntitiesListController(EntitiesRepository, $log, $rootScope, $scope, $s
 
     $scope.gridOptions.onRegisterApi = function (gridApi) {
         $scope.gridApi = gridApi;
-        console.log("Registered gridApi");
+        $log.debug("Registered gridApi");
         gridApi.selection.on.rowSelectionChanged($scope, function (row) {
             var selection = gridApi.selection.getSelectedRows();
             if (selection.length > 0) {
@@ -24,7 +23,7 @@ function EntitiesListController(EntitiesRepository, $log, $rootScope, $scope, $s
             } else {
                 $scope.selectedObject = null;
             }
-            console.log("Selected object: " + JSON.stringify($scope.selectedObject));
+            $log.debug("Selected object: " + JSON.stringify($scope.selectedObject));
         });
     };
 
@@ -34,7 +33,7 @@ function EntitiesListController(EntitiesRepository, $log, $rootScope, $scope, $s
 
     $scope.edit = function () {
         if ($scope.selectedObject) {
-            console.log("Edit: " + $scope.entityName + " - " + $scope.selectedObject.id);
+            $log.debug("Edit: " + $scope.entityName + " - " + $scope.selectedObject.id);
             $state.go("entities.edit", {entityName: $scope.entityName, id: $scope.selectedObject.id});
         }
     };
@@ -50,7 +49,7 @@ function EntitiesListController(EntitiesRepository, $log, $rootScope, $scope, $s
 
 
     function entitiesLoaded(entities) {
-        console.log("Entites returned: " + JSON.stringify(entities));
+        $log.debug("Entites returned: " + JSON.stringify(entities));
         $scope.entities = entities;
         $scope.gridOptions.columnDefs = createColumnDefs($scope.entityName);
         $scope.gridOptions.data = entities;
@@ -72,6 +71,6 @@ function EntitiesListController(EntitiesRepository, $log, $rootScope, $scope, $s
 
 
 export default [
-    'EntitiesRepository', '$log', '$rootScope', '$scope', '$state', '$location', '$stateParams', 'uiGridConstants',
+   '$log', '$rootScope', '$scope', '$state', '$stateParams',  'EntitiesRepository',
     EntitiesListController
 ];

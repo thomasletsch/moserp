@@ -2,7 +2,7 @@
  * Login Controller
  * @constructor
  */
-function LoginController($scope, $rootScope, $state, AuthenticationService) {
+function LoginController($log, $scope, $rootScope, $state, AuthenticationService) {
     // reset login status
     AuthenticationService.ClearCredentials();
 
@@ -13,7 +13,7 @@ function LoginController($scope, $rootScope, $state, AuthenticationService) {
             $state.go("entities");
             $scope.dataLoading = false;
         }, function (response) {
-            console.log("setting error message");
+            $log.debug("setting error message");
             $scope.error = response.message;
             $scope.dataLoading = false;
         });
@@ -24,6 +24,6 @@ function LoginController($scope, $rootScope, $state, AuthenticationService) {
 }
 
 export default [
-    '$scope', '$rootScope', '$state', 'AuthenticationService',
+    '$log', '$scope', '$rootScope', '$state', 'AuthenticationService',
     LoginController
 ];
