@@ -9,6 +9,8 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
 
     if ($stateParams.id) {
         EntitiesRepository.find($scope.entityName, $scope.entityId, entityLoaded);
+    } else {
+        $scope.model = {};
     }
 
     function entityLoaded(entity) {
@@ -30,9 +32,7 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
         });
 
         angular.forEach($scope.schema.properties, function (property, key) {
-            $translate(property.title).then(function (translation) {
-                $scope.schema.properties[key].title = translation;
-            })
+            translateProperty(property, key);
         });
 
         $scope.onSubmit = function (form) {
@@ -42,14 +42,26 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
 
             // Then we check if the form is valid
             //if (form.$valid) {
-            $log.debug("Form valid");
+            $log.debug("Form: " + JSON.stringify(form));
+            $log.debug("Model: " + JSON.stringify($scope.model));
             EntitiesRepository.save($scope.entityName, $scope.entityId, $scope.model, function success() {
                 $log.debug("Successful saved");
+                $state.go("entities.list", {entityName: $scope.entityName})
             });
             //} else {
             //    $log.debug("Form not valid");
             //    $log.debug("Model: " + JSON.stringify($scope.model));
             //}
+        }
+    }
+    function translateProperty(property, key) {
+        $translate(property.title).then(function (translation) {
+            property.title = translation;
+        });
+        if(property.type == 'array') {
+            angular.forEach(property.items.properties, function(innerProperty, innerKey) {
+                translateProperty(innerProperty, innerKey);
+            })
         }
     }
 }

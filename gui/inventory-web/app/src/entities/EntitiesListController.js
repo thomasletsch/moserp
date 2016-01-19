@@ -1,11 +1,12 @@
 var IGNORE_PROPERTIES = ["links", "displayName", "version"];
-function EntitiesListController($log, $rootScope, $scope, $state, $stateParams, EntitiesRepository) {
+function EntitiesListController($log, $rootScope, $scope, $state, i18nService, $translate, $stateParams, EntitiesRepository) {
 
     $log.debug("EntitiesListController(" + JSON.stringify($stateParams) + ")");
 
     $scope.$state = $state;
     $scope.entityName = $stateParams.entityName;
     $scope.resources = $rootScope.resources;
+    i18nService.setCurrentLang($translate.proposedLanguage());
 
     $scope.gridOptions = {
         enableSorting: true,
@@ -51,26 +52,28 @@ function EntitiesListController($log, $rootScope, $scope, $state, $stateParams, 
     function entitiesLoaded(entities) {
         $log.debug("Entites returned: " + JSON.stringify(entities));
         $scope.entities = entities;
-        $scope.gridOptions.columnDefs = createColumnDefs($scope.entityName);
+        $scope.gridOptions.columnDefs = createColumns($scope.entityName);
         $scope.gridOptions.data = entities;
     }
 
-    function createColumnDefs(entityName) {
-        var columnDefs = [];
+    function createColumns(entityName) {
+        var columns = [];
         for (let propertyName in $rootScope.schemata[entityName].properties) {
             var column = {};
-            column.name = propertyName;
+            column.displayName = propertyName;
+            column.field = propertyName;
+            column.headerCellFilter = 'translate';
             if (IGNORE_PROPERTIES.indexOf(propertyName) < 0) {
-                columnDefs.push(column);
+                columns.push(column);
             }
         }
-        return columnDefs;
+        return columns;
     }
 
 }
 
 
 export default [
-   '$log', '$rootScope', '$scope', '$state', '$stateParams',  'EntitiesRepository',
+   '$log', '$rootScope', '$scope', '$state', 'i18nService', '$translate', '$stateParams',  'EntitiesRepository',
     EntitiesListController
 ];
