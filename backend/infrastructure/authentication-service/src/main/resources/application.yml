@@ -1,0 +1,13 @@
+
+---
+spring:
+  profiles: local
+logging:
+  level:
+     org:
+       springframework:
+         security: DEBUG
+         web: INFO
+server:
+  port: 8899
+  contextPath: /uaa
