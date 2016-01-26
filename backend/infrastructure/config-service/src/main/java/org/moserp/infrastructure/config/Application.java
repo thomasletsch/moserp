@@ -1,4 +1,4 @@
-package org.moserp.configserver;
+package org.moserp.infrastructure.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 @EnableDiscoveryClient
 @EnableConfigServer
-public class ConfigServerApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConfigServerApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
