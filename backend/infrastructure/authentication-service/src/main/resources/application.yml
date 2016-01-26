@@ -1,5 +1,3 @@
-
----
 spring:
   profiles: local
 logging:
@@ -11,3 +9,7 @@ logging:
 server:
   port: 8899
   contextPath: /uaa
+  ssl:
+    key-store: classpath:keystore.jks
+    key-store-password: password
+    key-password: password
