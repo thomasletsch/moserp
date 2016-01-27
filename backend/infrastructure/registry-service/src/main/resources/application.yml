@@ -4,18 +4,20 @@ eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
+    serviceUrl:
+          defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     waitTimeInMsWhenSyncEmpty: 0
 ---
 spring:
-  profiles: test
+  profiles: test,local
 security:
   basic:
     enabled: false
 
 ---
 spring:
-  profiles: prod
+  profiles: docker
 security:
   basic:
     enabled: true
@@ -23,12 +25,3 @@ security:
       name: eureka-client
       password: ${EUREKA_PASSWORD}
 
----
-spring:
-  profiles: ssl
-server:
-  ssl:
-    key-store: eureka-server/keystore.jks
-    key-store-password: password
-    key-password: password
-    clientAuth: want

@@ -3,7 +3,11 @@ spring:
     name: facility.moserp.org
   cloud:
     config:
-      uri: ${CONFIG_SERVER_URL:http://localhost:8888}
+      enabled: true
+      discovery:
+        enabled: true
+        serviceId: CONFIG-SERVER
+
 eureka:
   instance:
     nonSecurePort: ${server.port:9302}

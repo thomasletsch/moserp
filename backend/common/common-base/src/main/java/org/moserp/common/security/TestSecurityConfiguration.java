@@ -11,7 +11,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 
 @Configuration
-@Profile({"test", "inttest"})
+@Profile({"test"})
 @EnableGlobalAuthentication
 public class TestSecurityConfiguration extends WebSecurityConfigurerAdapter {
 

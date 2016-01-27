@@ -2,8 +2,11 @@ spring:
   application:
     name: inventory.moserp.org
   cloud:
-    config:
-      uri: ${CONFIG_SERVER_URL:http://localhost:8888}
+      config:
+        enabled: true
+        discovery:
+          enabled: true
+          serviceId: CONFIG-SERVER
 
 eureka:
   instance:

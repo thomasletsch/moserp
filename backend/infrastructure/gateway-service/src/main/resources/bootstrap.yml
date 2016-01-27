@@ -1,0 +1,25 @@
+server:
+  port: 8765
+spring:
+  application:
+    name: gateway-service
+
+eureka:
+  instance:
+    securePortEnabled: true
+    securePort: ${server.port:8765}
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
+
+---
+spring:
+  profiles: docker
+  cloud:
+    config:
+      enabled: true
+      discovery:
+        enabled: true
+        serviceId: CONFIG-SERVER
+

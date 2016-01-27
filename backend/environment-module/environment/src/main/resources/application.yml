@@ -1,12 +1,19 @@
-server:
-  port: 9301
+---
 spring:
+  profiles: local
   data:
     mongodb:
       uri: mongodb://${MONGO_URL:localhost:27017}/environment
-ldap:
-  contextSource:
-    url: ${LDAP_URL}
-    userDn: cn=admin,dc=moserp,dc=org
-    password: ${LDAP_PASSWORD}
+server:
+  port: 9301
+authserver:
+ hostname: localhost
+ port: 8899
+ contextPath: uaa
+
+security:
+  oauth2:
+    resource:
+      userInfoUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+      preferTokenInfo: false
 

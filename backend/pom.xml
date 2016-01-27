@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.1.RELEASE</version>
+        <version>1.3.2.RELEASE</version>
     </parent>
 
     <groupId>org.moserp</groupId>
@@ -19,6 +19,8 @@
         <docker.image.prefix>moserp</docker.image.prefix>
         <java.version>1.8</java.version>
 
+        <spring-boot.version>1.3.2.RELEASE</spring-boot.version>
+        <spring-cloud-starter.version>Brixton.M4</spring-cloud-starter.version>
         <jackson-datatype-money.version>0.2.0</jackson-datatype-money.version>
         <moneta.version>1.0</moneta.version>
         <zxing.version>3.2.0</zxing.version>
@@ -28,6 +30,7 @@
 
     <modules>
         <module>common</module>
+        <module>infrastructure</module>
         <module>environment-module</module>
         <module>facility-module</module>
         <module>product-module</module>
@@ -35,8 +38,6 @@
         <module>inventory-module</module>
         <module>sales-module</module>
         <module>order-module</module>
-        <module>config-server</module>
-        <module>eureka-server</module>
     </modules>
 
     <dependencyManagement>
@@ -44,21 +45,14 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
-                <version>1.3.0.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-netflix</artifactId>
-                <version>1.0.3.RELEASE</version>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-parent</artifactId>
-                <version>Brixton.M3</version>
+                <version>${spring-cloud-starter.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -112,7 +106,7 @@
                 <plugin>
                     <groupId>org.projectlombok</groupId>
                     <artifactId>lombok-maven-plugin</artifactId>
-                    <version>1.16.6.1</version>
+                    <version>${lombok.version}</version>
                     <executions>
                         <execution>
                             <goals>

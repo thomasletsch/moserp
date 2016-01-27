@@ -29,14 +29,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authenticationManager(authenticationManager).tokenStore(tokenStore()).approvalStoreDisabled();
     }
 
+    // TODO: Would like to only rely on application.yml file for local profile. But this does not work, I have to configure the inMemory client store.
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("client")
+                .withClient("web")
                 .authorizedGrantTypes("authorization_code", "client_credentials", "refresh_token", "password", "implicit")
                 .authorities("ROLE_CLIENT")
                 .resourceIds("apis")
-                .scopes("read")
+                .scopes("read", "write")
                 .secret("secret")
                 .accessTokenValiditySeconds(300);
     }

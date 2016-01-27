@@ -1,9 +1,8 @@
 package org.moserp.infrastructure.authentication;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * The Main Spring Boot Application class that starts the authorization
@@ -16,8 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author rohitghatol
  */
 
-@ComponentScan
-@EnableAutoConfiguration
+@SpringBootApplication
 @EnableEurekaClient
 public class Application {
 

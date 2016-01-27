@@ -13,3 +13,16 @@ server:
     key-store: classpath:keystore.jks
     key-store-password: password
     key-password: password
+security:
+  oauth2:
+    client:
+      id: web
+      client-id: web
+      authorities:
+        - ROLE_CLIENT
+      authorized-grant-types: authorization_code,refresh_token,implicit,password,client_credentials
+      scope: read
+      client-secret: secret
+      resource-ids:
+        - apis
+      refresh-token-validity-seconds: 300

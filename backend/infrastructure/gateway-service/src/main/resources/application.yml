@@ -1,0 +1,45 @@
+logging:
+  level:
+     org:
+       springframework:
+         security: DEBUG
+
+---
+spring:
+  profiles: local
+authserver:
+ hostname: localhost
+ port: 8899
+ contextPath: uaa
+
+security:
+  oauth2:
+    sso:
+      home:
+        secure: false
+        path: /,/**/*.html
+    client:
+      accessTokenUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
+      userAuthorizationUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
+      clientId: web
+      clientSecret: secret
+    resource:
+      userInfoUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+      preferTokenInfo: false
+server:
+  port: 8765
+  ssl:
+    key-store: classpath:keystore.jks
+    key-store-password: password
+    key-password: password
+
+zuul:
+  ignoredServices: "*"
+  prefix: /api
+  routes:
+    ENVIRONMENT.MOSERP.ORG: /api/environment/**
+    web-portal: /**
+    user:
+      path: /api/user/**
+      stripPrefix: true
+      url: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}

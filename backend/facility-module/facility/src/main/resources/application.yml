@@ -1,11 +1,18 @@
-server:
-  port: 9302
+---
 spring:
+  profiles: local
   data:
     mongodb:
-      uri: mongodb://${MONGO_URL:localhost:27017}/facility
-ldap:
-  contextSource:
-    url: ${LDAP_URL}
-    userDn: cn=admin,dc=moserp,dc=org
-    password: ${LDAP_PASSWORD}
+      uri: mongodb://${MONGO_URL:localhost:27017}/environment
+server:
+  port: 9302
+authserver:
+ hostname: localhost
+ port: 8899
+ contextPath: uaa
+
+security:
+  oauth2:
+    resource:
+      userInfoUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+      preferTokenInfo: false

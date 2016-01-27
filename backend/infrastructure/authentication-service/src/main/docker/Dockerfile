@@ -1,6 +1,5 @@
 FROM java:8
 ADD authentication-service-1.0.0-SNAPSHOT.jar app.jar
-ADD selfsigned.cer /selfsigned.cer
 VOLUME /tmp
 VOLUME /target
 RUN bash -c 'touch /app.jar'
