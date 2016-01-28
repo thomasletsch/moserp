@@ -6,12 +6,24 @@ spring:
 
 eureka:
   instance:
-    securePortEnabled: true
-    securePort: ${server.port:8765}
-    preferIpAddress: true
+    secure-port-enabled: true
+    secure-port: ${server.port:8765}
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
+
+---
+spring:
+  profiles: local
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+        - 172.17.0.1
+eureka:
+  instance:
+    preferIpAddress: false
 
 ---
 spring:

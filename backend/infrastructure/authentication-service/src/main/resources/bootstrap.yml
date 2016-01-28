@@ -1,7 +1,29 @@
+server:
+  port: 8899
 spring:
   application:
     name: authentication-service
 
+eureka:
+  instance:
+    secure-port-enabled: true
+    secure-port: ${server.port:8899}
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
+
+---
+spring:
+  profiles: local
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+        - 172.17.0.1
+#eureka:
+#  instance:
+#    preferIpAddress: false
 ---
 spring:
   profiles: docker
@@ -11,11 +33,7 @@ spring:
       discovery:
         enabled: true
         serviceId: CONFIG-SERVER
-
 eureka:
   instance:
-    nonSecurePort: ${server.port:8765}
     preferIpAddress: true
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
+

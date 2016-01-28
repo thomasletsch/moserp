@@ -1,23 +1,32 @@
+spring:
+  profiles: local
+
 logging:
   level:
      org:
        springframework:
          security: DEBUG
 
----
-spring:
-  profiles: local
+server:
+  context-path: /api
+  ssl:
+    key-store: classpath:keystore.jks
+    key-store-password: password
+    key-password: password
+
 authserver:
  hostname: localhost
  port: 8899
  contextPath: uaa
 
 security:
+  user:
+    password: none
   oauth2:
     sso:
       home:
         secure: false
-        path: /,/**/*.html
+        path: /api,/**/*.html
     client:
       accessTokenUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
       userAuthorizationUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
@@ -26,20 +35,16 @@ security:
     resource:
       userInfoUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
       preferTokenInfo: false
-server:
-  port: 8765
-  ssl:
-    key-store: classpath:keystore.jks
-    key-store-password: password
-    key-password: password
 
 zuul:
-  ignoredServices: "*"
-  prefix: /api
+#  prefix: /api
   routes:
-    ENVIRONMENT.MOSERP.ORG: /api/environment/**
-    web-portal: /**
+    resource:
+          path: /resource/**
+          url: http://localhost:8765/api
+#    ENVIRONMENT.MOSERP.ORG: /environment/**
+#    web-portal: /**
     user:
-      path: /api/user/**
-      stripPrefix: true
-      url: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}
+      path: /user/**
+#      stripPrefix: true
+      url: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user

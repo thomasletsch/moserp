@@ -2,14 +2,12 @@ package org.moserp.infrastructure.gateway;
 
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
@@ -27,7 +25,6 @@ import java.io.IOException;
  * configuration and the web security associated with it.
  */
 @Configuration
-@Component
 @EnableOAuth2Sso
 public class OAuthConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -38,17 +35,16 @@ public class OAuthConfiguration extends WebSecurityConfigurerAdapter {
 	 * Define the security that applies to the proxy
 	 */
     public void configure(HttpSecurity http) throws Exception {
-        http
-        	.authorizeRequests()
+        http.logout().and().antMatcher("/**").authorizeRequests()
         	//Allow access to all static resources without authentication
         	.antMatchers("/","/**/*.html").permitAll()
         	.anyRequest().authenticated()
-        	.antMatchers(HttpMethod.GET, "/api/**").access("#oauth2.hasScope('read')")
-            .antMatchers(HttpMethod.OPTIONS, "/api/**").access("#oauth2.hasScope('read')")
-            .antMatchers(HttpMethod.POST, "/api/**").access("#oauth2.hasScope('write')")
-            .antMatchers(HttpMethod.PUT, "/api/**").access("#oauth2.hasScope('write')")
-            .antMatchers(HttpMethod.PATCH, "/api/**").access("#oauth2.hasScope('write')")
-            .antMatchers(HttpMethod.DELETE, "/api/**").access("#oauth2.hasScope('write')")
+//        	.antMatchers(HttpMethod.GET, "/api/**").access("#oauth2.hasScope('read')")
+//            .antMatchers(HttpMethod.OPTIONS, "/api/**").access("#oauth2.hasScope('read')")
+//            .antMatchers(HttpMethod.POST, "/api/**").access("#oauth2.hasScope('write')")
+//            .antMatchers(HttpMethod.PUT, "/api/**").access("#oauth2.hasScope('write')")
+//            .antMatchers(HttpMethod.PATCH, "/api/**").access("#oauth2.hasScope('write')")
+//            .antMatchers(HttpMethod.DELETE, "/api/**").access("#oauth2.hasScope('write')")
             .and().csrf().csrfTokenRepository(this.getCSRFTokenRepository())
             .and().addFilterAfter(this.createCSRFHeaderFilter(), CsrfFilter.class);
     }

@@ -11,7 +11,9 @@ import org.springframework.security.config.annotation.authentication.configurers
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -19,6 +21,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 
 @Configuration
 @EnableAuthorizationServer
+@EnableResourceServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -29,16 +32,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authenticationManager(authenticationManager).tokenStore(tokenStore()).approvalStoreDisabled();
     }
 
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer)
+            throws Exception {
+        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess(
+                "isAuthenticated()");
+    }
+
     // TODO: Would like to only rely on application.yml file for local profile. But this does not work, I have to configure the inMemory client store.
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("web")
+                .secret("secret")
                 .authorizedGrantTypes("authorization_code", "client_credentials", "refresh_token", "password", "implicit")
                 .authorities("ROLE_CLIENT")
-                .resourceIds("apis")
-                .scopes("read", "write")
-                .secret("secret")
+//                .resourceIds("apis")
+                .scopes("read", "write", "openid")
                 .accessTokenValiditySeconds(300);
     }
 
