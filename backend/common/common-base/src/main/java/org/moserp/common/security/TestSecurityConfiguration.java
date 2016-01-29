@@ -10,6 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.security.GeneralSecurityException;
+import java.security.cert.X509Certificate;
+
 @Configuration
 @Profile({"test"})
 @EnableGlobalAuthentication
@@ -26,4 +33,5 @@ public class TestSecurityConfiguration extends WebSecurityConfigurerAdapter {
         NegatedRequestMatcher matcher = new NegatedRequestMatcher(new AntPathRequestMatcher("/login", "POST"));
         http.csrf().disable().authorizeRequests().requestMatchers(matcher).authenticated().and().httpBasic();
     }
+
 }

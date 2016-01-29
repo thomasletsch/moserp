@@ -1,19 +1,35 @@
+security:
+  oauth2:
+    client:
+      accessTokenUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
+      userAuthorizationUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
+      clientId: web
+    resource:
+      userInfoUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+      preferTokenInfo: false
+
 ---
 spring:
   profiles: local
   data:
     mongodb:
       uri: mongodb://${MONGO_URL:localhost:27017}/environment
+
 server:
   port: 9301
+
 authserver:
- hostname: localhost
- port: 8899
- contextPath: uaa
+  protocol: http
+  hostname: localhost
+  port: 8899
+  contextPath: uaa
 
-security:
-  oauth2:
-    resource:
-      userInfoUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
-      preferTokenInfo: false
+---
+spring:
+  profiles: docker
 
+authserver:
+  protocol: https
+  hostname: localhost
+  port: 8899
+  contextPath: uaa

@@ -1,3 +1,34 @@
+server:
+  context-path: /api
+
+security:
+  user:
+    password: none
+  oauth2:
+    sso:
+      home:
+        secure: false
+        path: /,/**/*.html
+    client:
+      accessTokenUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
+      userAuthorizationUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
+      clientId: web
+    resource:
+      userInfoUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+      preferTokenInfo: false
+
+zuul:
+  routes:
+    resource:
+          path: /resource/**
+          url: http://localhost:8765/api
+#    web-portal: /**
+    user:
+      path: /user/**
+#      stripPrefix: true
+      url: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+
+---
 spring:
   profiles: local
 
@@ -7,44 +38,25 @@ logging:
        springframework:
          security: DEBUG
 
-server:
-  context-path: /api
+authserver:
+  protocol: http
+  hostname: localhost
+  port: 8899
+  contextPath: uaa
+
+---
+spring:
+  profiles: docker
   ssl:
     key-store: classpath:keystore.jks
     key-store-password: password
     key-password: password
 
 authserver:
- hostname: localhost
- port: 8899
- contextPath: uaa
+  protocol: https
+  hostname: localhost
+  port: 8899
+  contextPath: uaa
 
 security:
-  user:
-    password: none
-  oauth2:
-    sso:
-      home:
-        secure: false
-        path: /api,/**/*.html
-    client:
-      accessTokenUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
-      userAuthorizationUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
-      clientId: web
-      clientSecret: secret
-    resource:
-      userInfoUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
-      preferTokenInfo: false
-
-zuul:
-#  prefix: /api
-  routes:
-    resource:
-          path: /resource/**
-          url: http://localhost:8765/api
-#    ENVIRONMENT.MOSERP.ORG: /environment/**
-#    web-portal: /**
-    user:
-      path: /user/**
-#      stripPrefix: true
-      url: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+  require_ssl: true
