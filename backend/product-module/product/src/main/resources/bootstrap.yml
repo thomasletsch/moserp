@@ -1,15 +1,21 @@
 spring:
   application:
     name: product.moserp.org
-  cloud:
-    config:
-      uri: ${CONFIG_SERVER_URL:http://localhost:8888}
-
 eureka:
   instance:
     nonSecurePort: ${server.port:9303}
     preferIpAddress: true
-    statusPageUrlPath: /structure
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
+
+---
+spring:
+  profiles: docker
+  cloud:
+    config:
+      enabled: true
+      discovery:
+        enabled: true
+        serviceId: CONFIG-SERVER
+

@@ -1,18 +1,21 @@
 spring:
   application:
     name: inventory.moserp.org
-  cloud:
-      config:
-        enabled: true
-        discovery:
-          enabled: true
-          serviceId: CONFIG-SERVER
-
 eureka:
   instance:
     nonSecurePort: ${server.port:9304}
     preferIpAddress: true
-    statusPageUrlPath: /structure
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
+
+---
+spring:
+  profiles: docker
+  cloud:
+    config:
+      enabled: true
+      discovery:
+        enabled: true
+        serviceId: CONFIG-SERVER
+

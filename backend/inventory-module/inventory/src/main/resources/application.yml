@@ -1,11 +1,27 @@
-server:
-  port: 9304
+
+---
 spring:
+  profiles: local
   data:
     mongodb:
       uri: mongodb://${MONGO_URL:localhost:27017}/inventory
-ldap:
-  contextSource:
-    url: ${LDAP_URL:localhost:389}
-    userDn: cn=admin,dc=moserp,dc=org
-    password: ${LDAP_PASSWORD:password}
+
+server:
+  port: 9304
+
+authserver:
+  protocol: http
+  hostname: localhost
+  port: 8899
+  contextPath: uaa
+
+security:
+  oauth2:
+    client:
+      accessTokenUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
+      userAuthorizationUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
+      clientId: web
+    resource:
+      userInfoUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+      preferTokenInfo: false
+

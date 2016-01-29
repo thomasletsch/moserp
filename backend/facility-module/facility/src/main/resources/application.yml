@@ -1,18 +1,27 @@
+
 ---
 spring:
   profiles: local
   data:
     mongodb:
-      uri: mongodb://${MONGO_URL:localhost:27017}/environment
+      uri: mongodb://${MONGO_URL:localhost:27017}/facility
+
 server:
   port: 9302
+
 authserver:
- hostname: localhost
- port: 8899
- contextPath: uaa
+  protocol: http
+  hostname: localhost
+  port: 8899
+  contextPath: uaa
 
 security:
   oauth2:
+    client:
+      accessTokenUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
+      userAuthorizationUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
+      clientId: web
     resource:
-      userInfoUri: https://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+      userInfoUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
       preferTokenInfo: false
+

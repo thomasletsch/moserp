@@ -1,12 +1,3 @@
-security:
-  oauth2:
-    client:
-      accessTokenUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
-      userAuthorizationUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
-      clientId: web
-    resource:
-      userInfoUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
-      preferTokenInfo: false
 
 ---
 spring:
@@ -24,12 +15,13 @@ authserver:
   port: 8899
   contextPath: uaa
 
----
-spring:
-  profiles: docker
+security:
+  oauth2:
+    client:
+      accessTokenUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
+      userAuthorizationUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
+      clientId: web
+    resource:
+      userInfoUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+      preferTokenInfo: false
 
-authserver:
-  protocol: https
-  hostname: localhost
-  port: 8899
-  contextPath: uaa
