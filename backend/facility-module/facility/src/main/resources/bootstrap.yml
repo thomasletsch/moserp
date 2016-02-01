@@ -1,6 +1,6 @@
 spring:
   application:
-    name: facility.moserp.org
+    name: facility-module
 eureka:
   instance:
     nonSecurePort: ${server.port:9302}

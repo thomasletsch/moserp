@@ -1,6 +1,6 @@
 spring:
   application:
-    name: order.moserp.org
+    name: order-module
 eureka:
   instance:
     nonSecurePort: ${server.port:9306}

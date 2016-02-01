@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class ZuulConfiguration {
     @Bean
     public ServiceRouteMapper serviceRouteMapper() {
-        return new MosErpServiceMapper();
+        return new ModuleServiceMapper();
     }
 }

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: environment.moserp.org
+    name: environment-module
 eureka:
   instance:
     nonSecurePort: ${server.port:9301}

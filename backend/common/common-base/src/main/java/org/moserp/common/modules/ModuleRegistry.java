@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.core.env.Environment;
-import org.springframework.data.rest.webmvc.BaseUri;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -17,9 +15,11 @@ import java.util.List;
 @Service
 public class ModuleRegistry {
 
+    public static final String MODULE_POST_FIX = "-module";
+    
     @Autowired
     private DiscoveryClient discoveryClient;
-
+    
     @Autowired
     private Environment environment;
 
@@ -61,16 +61,16 @@ public class ModuleRegistry {
     // TODO: Use service registry for resource -> module lookup
     public String getModuleForResource(String resource) {
         switch (resource) {
-            case "users" : return "environment.moserp.org";
-            case "unitOfMeasurements" : return "environment.moserp.org";
-            case "valueLists" : return "environment.moserp.org";
-            case "facilities" : return "facility.moserp.org";
-            case "products" : return "product.moserp.org";
-            case "productCatalog" : return "product.moserp.org";
-            case "incomingDeliveries" : return "inventory.moserp.org";
-            case "outgoingDeliveries" : return "inventory.moserp.org";
-            case "inventoryTransfers" : return "inventory.moserp.org";
-            case "inventoryItems" : return "inventory.moserp.org";
+            case "users" : return "environment" + MODULE_POST_FIX;
+            case "unitOfMeasurements" : return "environment" + MODULE_POST_FIX;
+            case "valueLists" : return "environment" + MODULE_POST_FIX;
+            case "facilities" : return "facility" + MODULE_POST_FIX;
+            case "products" : return "product" + MODULE_POST_FIX;
+            case "productCatalog" : return "product" + MODULE_POST_FIX;
+            case "incomingDeliveries" : return "inventory" + MODULE_POST_FIX;
+            case "outgoingDeliveries" : return "inventory" + MODULE_POST_FIX;
+            case "inventoryTransfers" : return "inventory" + MODULE_POST_FIX;
+            case "inventoryItems" : return "inventory" + MODULE_POST_FIX;
             default: return "";
         }
     }

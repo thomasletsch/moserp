@@ -1,6 +1,6 @@
 spring:
   application:
-    name: product.moserp.org
+    name: product-module
 eureka:
   instance:
     nonSecurePort: ${server.port:9303}

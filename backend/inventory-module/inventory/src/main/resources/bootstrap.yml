@@ -1,6 +1,6 @@
 spring:
   application:
-    name: inventory.moserp.org
+    name: inventory-module
 eureka:
   instance:
     nonSecurePort: ${server.port:9304}
