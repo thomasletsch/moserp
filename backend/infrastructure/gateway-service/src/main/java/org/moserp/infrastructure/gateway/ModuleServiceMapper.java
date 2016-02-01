@@ -7,7 +7,7 @@ public class ModuleServiceMapper implements ServiceRouteMapper {
     @Override
     public String apply(String serviceId) {
         if(serviceId.endsWith("module")) {
-            return serviceId.replace("-module", "");
+            return "api/" + serviceId.replace("-module", "");
         }
         return serviceId;
     }

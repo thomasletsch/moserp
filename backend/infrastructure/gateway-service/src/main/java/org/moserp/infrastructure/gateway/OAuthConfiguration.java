@@ -35,18 +35,10 @@ public class OAuthConfiguration extends WebSecurityConfigurerAdapter {
 	 * Define the security that applies to the proxy
 	 */
     public void configure(HttpSecurity http) throws Exception {
-        http.logout().and().antMatcher("/**").authorizeRequests()
-        	//Allow access to all static resources without authentication
-        	.antMatchers("/","/**/*.html").permitAll()
-        	.anyRequest().authenticated()
-//        	.antMatchers(HttpMethod.GET, "/api/**").access("#oauth2.hasScope('read')")
-//            .antMatchers(HttpMethod.OPTIONS, "/api/**").access("#oauth2.hasScope('read')")
-//            .antMatchers(HttpMethod.POST, "/api/**").access("#oauth2.hasScope('write')")
-//            .antMatchers(HttpMethod.PUT, "/api/**").access("#oauth2.hasScope('write')")
-//            .antMatchers(HttpMethod.PATCH, "/api/**").access("#oauth2.hasScope('write')")
-//            .antMatchers(HttpMethod.DELETE, "/api/**").access("#oauth2.hasScope('write')")
-            .and().csrf().csrfTokenRepository(this.getCSRFTokenRepository())
-            .and().addFilterAfter(this.createCSRFHeaderFilter(), CsrfFilter.class);
+		http.authorizeRequests().antMatchers("/index.html", "/home.html", "/")
+				.permitAll().anyRequest().authenticated().and().csrf()
+				.csrfTokenRepository(getCSRFTokenRepository()).and()
+				.addFilterAfter(createCSRFHeaderFilter(), CsrfFilter.class);
     }
 	
 	/**

@@ -1,5 +1,5 @@
 server:
-  context-path: /api
+  context-path: /
 
 security:
   user:
@@ -8,7 +8,7 @@ security:
     sso:
       home:
         secure: false
-        path: /,/**/*.html
+        path: /,/**/*.html, /**/*.js
     client:
       accessTokenUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
       userAuthorizationUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
@@ -19,12 +19,11 @@ security:
 
 zuul:
   routes:
-    resource:
-          path: /resource/**
-          url: http://localhost:8765/api
-#    web-portal: /**
+    web-portal:
+      path: /web/**
+      url: http://localhost:3000/app
     user:
-      path: /user/**
+      path: /api/user/**
 #      stripPrefix: true
       url: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
 
