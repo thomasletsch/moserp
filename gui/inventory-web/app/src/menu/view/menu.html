@@ -1,9 +1,9 @@
 <ul class="nav nav-list" ng-controller="MenuController">
     <li><label class="tree-toggle nav-header">Menu</label>
         <ul class="nav nav-list tree">
-            <li ng-repeat="menuEntry in menu">{{menuEntry.label}}
+            <li ng-repeat="menuEntry in menu | orderBy:'label'">{{menuEntry.label}}
                 <ul>
-                    <li ng-repeat="item in menuEntry.items"> <a ng-href="#/entities/{{item.key}}">{{item.label}}</a></li>
+                    <li ng-repeat="item in menuEntry.items | orderBy:'label'"> <a ng-href="#/entities/{{item.key}}">{{item.label}}</a></li>
                 </ul>
             </li>
 

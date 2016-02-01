@@ -4,7 +4,6 @@
 function EntitiesRepository($log, $rootScope, $http) {
     $log.debug("EntitiesRepository");
 
-    // Promise-based API
     return {
         find: function (entityName, id, successCallback) {
             $log.debug("find()");
@@ -14,7 +13,7 @@ function EntitiesRepository($log, $rootScope, $http) {
             var url = $rootScope.resources[entityName] + "/" + id;
             $http.get(url).then(function success(response) {
                 var data = response.data;
-                data.version = response.headers("ETag").replace(/"/g, '');
+                data.version = Number(response.headers("ETag").replace(/"/g, ''));
                 $log.debug("Version " + data.version);
                 successCallback(data);
             });

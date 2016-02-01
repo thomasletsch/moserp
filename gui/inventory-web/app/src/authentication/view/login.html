@@ -1,13 +1,7 @@
 <div ng-show="error" class="alert alert-danger">{{error}}</div>
-<form class="navbar-form navbar-right" role="login" ng-show="!$root.globals.currentUser">
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" class="form-control" ng-model="username" required/>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" class="form-control" ng-model="password" required/>
-    </div>
-    <button type="button" ng-disabled="form.$invalid || dataLoading" class="btn btn-default btn-sm" ng-click="login()">Login</button>
-</form>
-<div class="navbar-text navbar-right" ng-show="$root.globals.currentUser">Hello {{user}}
+<div class="navbar-form navbar-right" ng-show="!authenticated">
+    <a href="/login?redirect_uri=http://localhost:8765/web/index.html">login</a>
+</div>
+<div class="navbar-text navbar-right" ng-show="authenticated">Hello {{userName}}
     <button type="button" class="btn btn-default btn-sm" ng-click="logout()">Logout</button>
 </div>

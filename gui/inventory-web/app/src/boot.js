@@ -10,7 +10,6 @@ import 'angular-schema-form-bootstrap'
 import 'angular-ui-grid'
 import 'angular-translate'
 import 'angular-translate-loader-static-files'
-import registry from 'registry/Registry';
 import structure from 'structure/Structure';
 import authentication from 'authentication/Authentication';
 import entities from 'entities/Entities';
@@ -33,7 +32,7 @@ angular
                 'ui.grid', 'ui.grid.pagination', 'ui.grid.selection',
                 'schemaForm',
                 'pascalprecht.translate',
-                registry, structure, authentication, entities, menu])
+                structure, authentication, entities, menu])
             .config(['$translateProvider', function($translateProvider) {
                 $translateProvider.useStaticFilesLoader({
                     prefix: 'src/translations_',
@@ -77,12 +76,12 @@ angular
                     controller: LoginController
                 };
             })
-            .run(function ($log, $rootScope, $location, AuthenticationService) {
+            .run(function ($log, $rootScope, $state, AuthenticationService) {
                 $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
                     $log.debug('Transition to ' + JSON.stringify(toState));
                     if (!AuthenticationService.isLoggedIn() && toState.url != '/login') {
                         $log.info('Not logged in - forwarding to login page');
-                        $location.path('/login');
+                        $state.go('default');
                         event.preventDefault();
                     }
                 })
