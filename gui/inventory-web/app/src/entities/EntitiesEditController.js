@@ -5,37 +5,44 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
     $scope.entityName = $stateParams.entityName;
     $scope.entityId = $stateParams.id;
     $scope.resources = $rootScope.resources;
+
     prepareEditForm();
 
     if ($stateParams.id) {
         EntitiesRepository.find($scope.entityName, $scope.entityId, entityLoaded);
     } else {
+        $scope.schema = $scope.preparedSchema;
+        $scope.form = $scope.preparedForm;
         $scope.model = {};
     }
 
     function entityLoaded(entity) {
-        $log.debug("Entity returned: " + JSON.stringify(entity));
+        $log.debug("Entity " + (typeof entity) + " returned: " + JSON.stringify(entity));
+        $scope.schema = $scope.preparedSchema;
+        $scope.form = $scope.preparedForm;
         $scope.model = entity;
+        $log.debug("Entity array: " + Object.prototype.toString.call(entity.values));
     }
 
-     function prepareEditForm() {
+    function prepareEditForm() {
         $log.debug("Schema: " + JSON.stringify($rootScope.schemata[$scope.entityName]));
-        $scope.schema = $rootScope.schemata[$scope.entityName];
+        $scope.preparedSchema = $rootScope.schemata[$scope.entityName];
+        $scope.preparedForm = {};
 
         if (FORM_FIELDS[$scope.entityName]) {
-            $scope.form = FORM_FIELDS[$scope.entityName];
+            $scope.preparedForm = FORM_FIELDS[$scope.entityName];
         } else {
-            $scope.form = FORM_FIELDS['default'];
+            $scope.preparedForm = FORM_FIELDS['default'];
         }
         $translate("save").then(function (translation) {
-            $scope.form = $scope.form.concat([{type: "submit", title: translation}]);
+            $scope.preparedForm = $scope.preparedForm.concat([{type: "submit", title: translation}]);
         });
 
-        angular.forEach($scope.schema.properties, function (property, key) {
+        angular.forEach($scope.preparedSchema.properties, function (property, key) {
             translateProperty(property, key);
         });
 
-        $scope.onSubmit = function (form) {
+        $scope.onSubmit = function (form, model) {
             $log.debug("Submitting...");
             // First we broadcast an event so all fields validate themselves
             $scope.$broadcast('schemaFormValidate');
@@ -43,8 +50,8 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
             // Then we check if the form is valid
             //if (form.$valid) {
             $log.debug("Form: " + JSON.stringify(form));
-            $log.debug("Model: " + JSON.stringify($scope.model));
-            EntitiesRepository.save($scope.entityName, $scope.entityId, $scope.model, function success() {
+            $log.debug("Model: " + JSON.stringify(model, undefined, 2));
+            EntitiesRepository.save($scope.entityName, $scope.entityId, model, function success() {
                 $log.debug("Successful saved");
                 $state.go("entities.list", {entityName: $scope.entityName})
             });
@@ -54,19 +61,28 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
             //}
         }
     }
+
     function translateProperty(property, key) {
         $translate(property.title).then(function (translation) {
             property.title = translation;
         });
-        if(property.type == 'array') {
-            angular.forEach(property.items.properties, function(innerProperty, innerKey) {
+        if (property.type == 'array') {
+            $translate(property.items.title).then(function (translation) {
+                property.items.title = translation;
+            });
+            angular.forEach(property.items.properties, function (innerProperty, innerKey) {
                 translateProperty(innerProperty, innerKey);
             })
         }
     }
 }
 
-var FORM_FIELDS = {defaults: ["*"], users: ["name"], unitOfMeasurements: ["code", "description"], valueLists: ["key", "values"]};
+var FORM_FIELDS = {
+    defaults: ["*"],
+    users: ["name"],
+    unitOfMeasurements: ["code", "description"],
+    valueLists: ["key", {"key": "values", "add": "Neuer Wert", "items": ["values[].value"]}]
+};
 
 export default [
     'EntitiesRepository', '$log', '$rootScope', '$scope', '$state', '$translate', '$stateParams', 'uiGridConstants',

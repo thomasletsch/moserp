@@ -2,7 +2,7 @@
  * Login Controller
  * @constructor
  */
-function LoginController($log, $scope, $rootScope, $state, AuthenticationService, StructureService) {
+function LoginController($log, $scope, $http, $state, AuthenticationService, StructureService) {
 
     $scope.logout = function () {
         $http.post('/logout', {}).success(function() {
@@ -12,10 +12,11 @@ function LoginController($log, $scope, $rootScope, $state, AuthenticationService
             console.log("Logout failed");
             AuthenticationService.logout();
         });
+        $state.go("default");
     }
 }
 
 export default [
-    '$log', '$scope', '$rootScope', '$state', 'AuthenticationService', 'StructureService',
+    '$log', '$scope', '$http', '$state', 'AuthenticationService', 'StructureService',
     LoginController
 ];

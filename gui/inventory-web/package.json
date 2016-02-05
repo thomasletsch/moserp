@@ -33,6 +33,10 @@
       "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.93"
     }
   },
+  "scripts": {
+    "server": "jspm-server",
+    "start": "npm run server"
+  },
   "devDependencies": {
     "http-server": "^0.6.1",
     "jasmine-core": "^2.3.4",
@@ -43,6 +47,6 @@
     "karma-junit-reporter": "^0.2.2",
     "protractor": "^2.1.0",
     "shelljs": "^0.2.6",
-    "lite-server": "^1.3.4"
+    "jspm-server": "^1.0.1"
   }
 }

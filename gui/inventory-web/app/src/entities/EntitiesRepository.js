@@ -40,6 +40,8 @@ function EntitiesRepository($log, $rootScope, $http) {
                 }
                 $http.put(url, entity, {headers: {"If-Match": entity.version}}).then(function success(response) {
                     successCallback(response.data);
+                }, function error(response) {
+                    $log.error("Could not save!");
                 });
             } else {
                 var url = $rootScope.resources[entityName];

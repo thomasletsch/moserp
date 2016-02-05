@@ -1,5 +1,7 @@
 {
   "org.moserp.environment" : "Allgemeines",
+  "org.moserp.facility" : "Einrichtungen",
+  "org.moserp.inventory" : "Lager",
   "org.moserp.product" : "Produkte",
 
   "shipments" : "Lieferungen",
