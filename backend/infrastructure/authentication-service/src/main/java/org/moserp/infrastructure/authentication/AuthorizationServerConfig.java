@@ -46,12 +46,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("web")
                 .authorizedGrantTypes("authorization_code", "client_credentials", "refresh_token", "password", "implicit")
                 .scopes("read", "write", "openid")
-                .accessTokenValiditySeconds(300)
+                .accessTokenValiditySeconds(3000)
                 .and()
                 .withClient("android")
                 .authorizedGrantTypes("authorization_code", "client_credentials", "refresh_token", "password", "implicit")
                 .scopes("read", "write", "openid")
-                .accessTokenValiditySeconds(300)
+                .accessTokenValiditySeconds(3000)
         ;
     }
 

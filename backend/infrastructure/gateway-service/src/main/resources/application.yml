@@ -21,7 +21,7 @@ zuul:
   routes:
     web-portal:
       path: /web/**
-      url: http://localhost:3000/app
+      url: http://localhost:8080/app
     user:
       path: /api/user/**
 #      stripPrefix: true
