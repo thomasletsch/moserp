@@ -1,6 +1,6 @@
 <div ng-show="error" class="alert alert-danger">{{error}}</div>
 <div class="navbar-form navbar-right" ng-show="!authenticated">
-    <a href="/login?redirect_uri=http://localhost:8765/web/index.html">login</a>
+    <a href="/oauth/login?redirect_uri=http://localhost:8765/web/index.html">login</a>
 </div>
 <div class="navbar-text navbar-right" ng-show="authenticated">Hello {{userName}}
     <button type="button" class="btn btn-default btn-sm" ng-click="logout()">Logout</button>
