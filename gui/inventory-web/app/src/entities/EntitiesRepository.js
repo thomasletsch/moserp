@@ -1,7 +1,7 @@
 /**
  * Entities DataService
  */
-function EntitiesRepository($log, $rootScope, $http) {
+function EntitiesRepository($log, $rootScope, $http, $location) {
     $log.debug("EntitiesRepository");
 
     return {
@@ -26,6 +26,8 @@ function EntitiesRepository($log, $rootScope, $http) {
             var url = $rootScope.resources[entityName];
             $http.get(url).then(function success(response) {
                 successCallback(response.data["_embedded"][entityName]);
+            }, function error(response) {
+                $log.warn("Could not load entities " + entityName + ". Response code " + response.status);
             });
         },
         save: function (entityName, id, entity, successCallback) {
@@ -54,4 +56,4 @@ function EntitiesRepository($log, $rootScope, $http) {
     };
 }
 
-export default ['$log', '$rootScope', '$http', EntitiesRepository];
+export default ['$log', '$rootScope', '$http', '$location', EntitiesRepository];

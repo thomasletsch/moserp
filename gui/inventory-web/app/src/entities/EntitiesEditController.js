@@ -34,12 +34,14 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
         } else {
             $scope.preparedForm = FORM_FIELDS['default'];
         }
-        $translate("save").then(function (translation) {
-            $scope.preparedForm = $scope.preparedForm.concat([{type: "submit", title: translation}]);
+        $scope.preparedForm = $scope.preparedForm.concat([{type: "submit", title: "save"}]);
+
+        angular.forEach($scope.preparedForm, function (formEntry, index) {
+            translateTitle(formEntry);
         });
 
         angular.forEach($scope.preparedSchema.properties, function (property, key) {
-            translateProperty(property, key);
+            translateTitle(property);
         });
 
         $scope.onSubmit = function (form, model) {
@@ -62,7 +64,7 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
         }
     }
 
-    function translateProperty(property, key) {
+    function translateTitle(property) {
         $translate(property.title).then(function (translation) {
             property.title = translation;
         });
@@ -71,7 +73,7 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
                 property.items.title = translation;
             });
             angular.forEach(property.items.properties, function (innerProperty, innerKey) {
-                translateProperty(innerProperty, innerKey);
+                translateTitle(innerProperty);
             })
         }
     }
@@ -81,7 +83,7 @@ var FORM_FIELDS = {
     defaults: ["*"],
     users: ["name"],
     unitOfMeasurements: ["code", "description"],
-    valueLists: ["key", {"key": "values", "add": "Neuer Wert", "items": ["values[].value"]}]
+    valueLists: ["key", {"key": "values", "add": "new", "items": ["values[].value"]}]
 };
 
 export default [
