@@ -10,6 +10,7 @@ import 'angular-schema-form-bootstrap'
 import 'angular-ui-grid'
 import 'angular-translate'
 import 'angular-translate-loader-static-files'
+import 'angular-oauth2'
 import structure from 'structure/Structure';
 import authentication from 'authentication/Authentication';
 import entities from 'entities/Entities';
@@ -32,6 +33,7 @@ angular
                 'ui.grid', 'ui.grid.pagination', 'ui.grid.selection',
                 'schemaForm',
                 'pascalprecht.translate',
+                'angular-oauth2',
                 structure, authentication, entities, menu])
             .config(['$translateProvider', function($translateProvider) {
                 $translateProvider.useStaticFilesLoader({
@@ -39,6 +41,12 @@ angular
                     suffix: '.json'
                 });
                 $translateProvider.preferredLanguage('de');
+            }])
+            .config(['OAuthProvider', function (OAuthProvider) {
+                OAuthProvider.configure({
+                    baseUrl: 'http://localhost:8765/oauth',
+                    clientId: 'web'
+                })
             }])
             .config(function ($stateProvider, $urlRouterProvider) {
                 $urlRouterProvider.otherwise("/login");
@@ -73,7 +81,24 @@ angular
                         event.preventDefault();
                     }
                 })
-            });
+            })
+            .run(['$rootScope', '$window', 'OAuth', function ($rootScope, $window, OAuth) {
+                $rootScope.$on('oauth:error', function (event, rejection) {
+                    // Ignore `invalid_grant` error - should be catched on `LoginController`.
+                    if ('invalid_grant' === rejection.data.error) {
+                        return;
+                    }
+
+                    // Refresh token when a `invalid_token` error occurs.
+                    if ('invalid_token' === rejection.data.error) {
+                        return OAuth.getRefreshToken();
+                    }
+
+                    // Redirect to `/login` with the `error_reason`.
+                    return $window.location.href = '/login?error_reason=' + rejection.data.error;
+                })
+            }])
+        ;
         angular.bootstrap(body, [appName], {strictDi: false})
     });
 

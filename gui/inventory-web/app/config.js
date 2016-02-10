@@ -20,6 +20,7 @@ System.config({
     "angular-aria": "github:angular/bower-angular-aria@1.4.8",
     "angular-cookies": "npm:angular-cookies@1.4.8",
     "angular-messages": "github:angular/bower-angular-messages@1.4.8",
+    "angular-oauth2": "github:seegno/angular-oauth2@3.0.1",
     "angular-route": "github:angular/bower-angular-route@master",
     "angular-schema-form": "npm:angular-schema-form@0.8.12",
     "angular-schema-form-bootstrap": "npm:angular-schema-form-bootstrap@0.2.0",
@@ -32,6 +33,7 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.20",
     "jquery": "npm:jquery@2.1.4",
     "json": "github:systemjs/plugin-json@0.1.0",
+    "query-string": "npm:query-string@3.0.0",
     "text": "github:systemjs/plugin-text@0.0.2",
     "traceur": "github:jmcriffey/bower-traceur@0.0.93",
     "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.93",
@@ -95,6 +97,9 @@ System.config({
     },
     "npm:process@0.11.2": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
+    },
+    "npm:query-string@3.0.0": {
+      "strict-uri-encode": "npm:strict-uri-encode@1.1.0"
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
