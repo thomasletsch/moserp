@@ -64,18 +64,6 @@ angular
                     })
 
             })
-            .directive('appMenu', function () {
-                return {
-                    templateUrl: 'src/menu/view/menu.html',
-                    controller: MenuController
-                };
-            })
-            .directive('appLogin', function () {
-                return {
-                    templateUrl: "src/authentication/view/login.html",
-                    controller: LoginController
-                };
-            })
             .run(function ($log, $rootScope, $state, AuthenticationService) {
                 $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
                     $log.debug('Transition to ' + JSON.stringify(toState));
