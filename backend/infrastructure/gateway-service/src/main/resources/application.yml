@@ -6,9 +6,7 @@ security:
     password: none
   oauth2:
     sso:
-      home:
-        secure: false
-        path: /,/**/*.html, /**/*.js
+        loginPath: /login
     client:
       accessTokenUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
       userAuthorizationUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
@@ -24,8 +22,10 @@ zuul:
       url: http://localhost:8080/app
     user:
       path: /api/user/**
-#      stripPrefix: true
       url: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/user
+    authentication-service:
+      path: /uaa/**
+      stripPrefix: false
 
 ---
 spring:

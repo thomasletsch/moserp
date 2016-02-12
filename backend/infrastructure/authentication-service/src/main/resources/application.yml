@@ -5,6 +5,10 @@ server:
 spring:
   profiles: local
 
+#security:
+#  user:
+#    password: none
+
 logging:
   level:
      org:

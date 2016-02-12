@@ -17,13 +17,19 @@
 package org.moserp.infrastructure.gateway;
 
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
@@ -51,12 +57,27 @@ public class OAuthConfiguration extends WebSecurityConfigurerAdapter {
 	 * Define the security that applies to the proxy
 	 */
     public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/index.html", "/home.html", "/")
-				.permitAll().anyRequest().authenticated().and().csrf()
-				.csrfTokenRepository(getCSRFTokenRepository()).and()
-				.addFilterAfter(createCSRFHeaderFilter(), CsrfFilter.class);
+		http.logout().and()
+                .antMatcher("/**").authorizeRequests()
+                .antMatchers("/index.html", "/home.html", "/web/**", "/uaa/oauth/**").permitAll()
+                .anyRequest().authenticated().and()
+                .csrf().csrfTokenRepository(getCSRFTokenRepository()).ignoringAntMatchers("/uaa/oauth/token").and()
+                .addFilterAfter(createCSRFHeaderFilter(), CsrfFilter.class);
     }
-	
+
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true); // you USUALLY want this
+        config.addAllowedOrigin("http://localhost:8899");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+
 	/**
 	 * Spring security offers in-built protection for cross site request forgery
 	 * (CSRF) by needing a custom token in the header for any requests that are
