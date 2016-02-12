@@ -34,7 +34,11 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
         } else {
             $scope.preparedForm = FORM_FIELDS['default'];
         }
-        $scope.preparedForm = $scope.preparedForm.concat([{type: "submit", title: "save"}]);
+        $scope.preparedForm = $scope.preparedForm.concat({
+            type: "actions",
+            items: [{type: "submit", style: 'btn-success', title: "save"},
+                {type: 'button', style: 'btn-info', title: 'Cancel', onClick: "cancel()"}]
+        });
 
         angular.forEach($scope.preparedForm, function (formEntry, index) {
             translateTitle(formEntry);
@@ -43,6 +47,11 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
         angular.forEach($scope.preparedSchema.properties, function (property, key) {
             translateTitle(property);
         });
+
+        $scope.cancel = function(form, model) {
+            $log.debug("Cancel...");
+            window.history.back();
+        };
 
         $scope.onSubmit = function (form, model) {
             $log.debug("Submitting...");

@@ -10,7 +10,8 @@ import 'angular-schema-form-bootstrap'
 import 'angular-ui-grid'
 import 'angular-translate'
 import 'angular-translate-loader-static-files'
-import 'angular-oauth2'
+import 'oauth-ng'
+import 'ngstorage'
 import structure from 'structure/Structure';
 import authentication from 'authentication/Authentication';
 import entities from 'entities/Entities';
@@ -33,26 +34,28 @@ angular
                 'ui.grid', 'ui.grid.pagination', 'ui.grid.selection',
                 'schemaForm',
                 'pascalprecht.translate',
-                'angular-oauth2',
+                'oauth',
                 structure, authentication, entities, menu])
-            .config(['$translateProvider', function($translateProvider) {
+            .config(['$translateProvider', function ($translateProvider) {
                 $translateProvider.useStaticFilesLoader({
                     prefix: 'src/translations_',
                     suffix: '.json'
                 });
                 $translateProvider.preferredLanguage('de');
             }])
-            .config(['OAuthProvider', function (OAuthProvider) {
-                OAuthProvider.configure({
-                    baseUrl: 'http://localhost:8765/oauth',
-                    clientId: 'web'
-                })
-            }])
             .config(function ($stateProvider, $urlRouterProvider) {
-                $urlRouterProvider.otherwise("/login");
+                $urlRouterProvider
+                    .when('/access_token=:accessToken', function ($log, $location, AccessToken) {
+                        var hash = $location.path().substr(1);
+                        $log.debug("Retrieving access token from uri: " + hash);
+                        AccessToken.setTokenFromString(hash);
+                        $location.path('/');
+                        $location.replace();
+                    });
+                $urlRouterProvider.otherwise("/");
                 $stateProvider
                     .state('default', {
-                        url: "/login",
+                        url: "/",
                         templateUrl: 'src/home/view/home.html'
                     })
                     .state('entities', {
@@ -70,35 +73,58 @@ angular
                         templateUrl: "src/entities/view/entities.edit.html",
                         controller: EntitiesEditController
                     })
-
             })
-            .run(function ($log, $rootScope, $state, AuthenticationService) {
-                $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-                    $log.debug('Transition to ' + JSON.stringify(toState));
-                    if (!AuthenticationService.isLoggedIn() && toState.url != '/login') {
-                        $log.info('Not logged in - forwarding to login page');
-                        $state.go('default');
-                        event.preventDefault();
-                    }
-                })
-            })
-            .run(['$rootScope', '$window', 'OAuth', function ($rootScope, $window, OAuth) {
-                $rootScope.$on('oauth:error', function (event, rejection) {
-                    // Ignore `invalid_grant` error - should be catched on `LoginController`.
-                    if ('invalid_grant' === rejection.data.error) {
-                        return;
-                    }
+            .config(['$httpProvider',  function ($httpProvider) {
+                $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+                $httpProvider.interceptors.push(['$log', '$rootScope', '$q', 'AccessToken', function ($log, $rootScope, $q, AccessToken) {
+                    return {
+                        response: function(response) {
+                            $log.debug("HTTP Response: ", response.status);
+                            return response;
+                        },
+                        responseError: function (rejection) {
+                            $log.debug("HTTP Error: ", rejection.status);
+                            var config = rejection.config || {};
+                            if (!config.ignoreAuthModule) {
+                                switch (rejection.status) {
+                                    case 401:
+                                        var deferred = $q.defer();
+                                        $rootScope.$broadcast('oauth:denied');
 
-                    // Refresh token when a `invalid_token` error occurs.
-                    if ('invalid_token' === rejection.data.error) {
-                        return OAuth.getRefreshToken();
-                    }
-
-                    // Redirect to `/login` with the `error_reason`.
-                    return $window.location.href = '/login?error_reason=' + rejection.data.error;
-                })
+                                        return deferred.promise;
+                                    case 403:
+                                        $rootScope.$broadcast('oauth:forbidden');
+                                        break;
+                                }
+                            }
+                            // otherwise, default behaviour
+                            return $q.reject(rejection);
+                        },
+                        request: function(config) {
+                            if(AccessToken) {
+                                var token = AccessToken.get();
+                                if(token) {
+                                    //config.headers['X-Auth-Token'] = token.access_token;
+                                    config.headers.Authorization = 'Bearer ' + token.access_token;
+                                }
+                            }
+                            return config;
+                        }
+                    };
+                }]);
             }])
-        ;
+
+        //.run(function ($log, $rootScope, $state, AuthenticationService) {
+        //    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        //        $log.debug('Transition to ' + JSON.stringify(toState));
+        //        if (!AuthenticationService.isLoggedIn() && toState.url != '/login') {
+        //            $log.info('Not logged in - forwarding to login page');
+        //            $state.go('default');
+        //            event.preventDefault();
+        //        }
+        //    })
+        //})
+            ;
         angular.bootstrap(body, [appName], {strictDi: false})
     });
 

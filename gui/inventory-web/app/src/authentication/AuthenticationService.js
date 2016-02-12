@@ -1,4 +1,4 @@
-function AuthenticationService($log, $http, $cookieStore, $rootScope, StructureService) {
+function AuthenticationService($log, $http, $rootScope) {
     $http.defaults.headers.common.Accept = 'application/json';
     var service = {};
 
@@ -17,7 +17,7 @@ function AuthenticationService($log, $http, $cookieStore, $rootScope, StructureS
         $log.debug("user: " + JSON.stringify(data));
         if (data.name) {
             login(data.name);
-            StructureService.loadResources();
+            $rootScope.$broadcast('oauth:profile', data);
         } else {
             clearCredentials();
             $log.info("Not logged in!");
@@ -38,4 +38,4 @@ function AuthenticationService($log, $http, $cookieStore, $rootScope, StructureS
 }
 
 
-export default ['$log', '$http', '$cookieStore', '$rootScope', 'StructureService', AuthenticationService];
+export default ['$log', '$http', '$rootScope', AuthenticationService];
