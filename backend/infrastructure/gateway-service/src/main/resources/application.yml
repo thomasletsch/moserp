@@ -5,8 +5,6 @@ security:
   user:
     password: none
   oauth2:
-    sso:
-        loginPath: /login
     client:
       accessTokenUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/token
       userAuthorizationUri: ${authserver.protocol}://${authserver.hostname}:${authserver.port}/${authserver.contextPath}/oauth/authorize
