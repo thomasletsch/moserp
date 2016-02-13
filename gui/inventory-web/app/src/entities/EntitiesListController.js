@@ -1,5 +1,6 @@
-var IGNORE_PROPERTIES = ["links", "displayName", "version"];
-var CUSTOM_ORDER = {"id": 100, "createdDate": -100, "createdBy": -101, "lastModifiedDate": -102, "lastModifiedBy": -103};
+var IGNORE_PROPERTIES = ["links", "displayName"];
+var HIDE_PROPERTIES = ["createdDate", "createdBy", "lastModifiedDate", "lastModifiedBy", "version"];
+var CUSTOM_ORDER = {"id": 100, "validFrom": -100, "validTo": -101, "createdDate": -1000, "createdBy": -1001, "lastModifiedDate": -1002, "lastModifiedBy": -1003};
 
 function EntitiesListController($log, $rootScope, $scope, $state, i18nService, $translate, $stateParams, EntitiesRepository) {
 
@@ -11,6 +12,7 @@ function EntitiesListController($log, $rootScope, $scope, $state, i18nService, $
     i18nService.setCurrentLang($translate.proposedLanguage());
 
     $scope.gridOptions = {
+        enableGridMenu: true,
         enableSorting: true,
         enableColumnResizing: true,
         enableFullRowSelection: true,
@@ -70,9 +72,12 @@ function EntitiesListController($log, $rootScope, $scope, $state, i18nService, $
             column.headerCellFilter = 'translate';
             column.width = "*";
             if (property.type === 'array') {
-                column.cellTemplate = '<div class="ui-grid-cell-contents" title="TOOLTIP">{{grid.appScope.printArray(grid, row, col)}}</div>';
+                column.cellTemplate = '<div class="ui-grid-cell-contents" title="{{grid.appScope.printArray(grid, row, col)}}">{{grid.appScope.printArray(grid, row, col)}}</div>';
             }
-            if (IGNORE_PROPERTIES.indexOf(propertyName) < 0) {
+            if(HIDE_PROPERTIES.indexOf(propertyName) >= 0) {
+                column.visible = false;
+            }
+            if (!(IGNORE_PROPERTIES.indexOf(propertyName) >= 0)) {
                 columns.push(column);
             }
         }
@@ -89,6 +94,7 @@ function EntitiesListController($log, $rootScope, $scope, $state, i18nService, $
         angular.forEach(value, function(entry, index) {
             result += entry["displayName"] + ", ";
         });
+        result = result.substr(0, result.length - 2);  // remove the last comma again
         return result;
     };
 
@@ -108,7 +114,7 @@ function EntitiesListController($log, $rootScope, $scope, $state, i18nService, $
             return orderA - orderB;
         } else {
             $log.debug("fieldA: " + fieldA + " fieldB: " + fieldB + " compare: " + fieldA.localeCompare(fieldB))
-            return fieldA.localeCompare(fieldB);
+            return -fieldA.localeCompare(fieldB);
         }
     }
 }

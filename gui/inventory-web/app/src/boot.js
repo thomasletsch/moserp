@@ -31,8 +31,6 @@ angular
         let body = document.getElementsByTagName("body")[0];
         let app = angular
             .module(appName, ['ui.router', 'ui.bootstrap',
-                'ui.grid', 'ui.grid.pagination', 'ui.grid.selection',
-                'schemaForm',
                 'pascalprecht.translate',
                 'oauth',
                 structure, authentication, entities, menu])

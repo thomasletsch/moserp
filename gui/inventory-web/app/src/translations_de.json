@@ -21,6 +21,7 @@
   "quantity" : "Anzahl",
   "status" : "Status",
   "active" : "Aktiv",
+  "version" : "Version",
 
   "facilities" : "Einrichtungen",
   "facility" : "Einrichtung",
@@ -43,6 +44,7 @@
   "catalog" : "Katalog",
   "salesPrice" : "Verkaufspreis",
   "attributes" : "Attribute",
+  "ProductAttribute" : "Produkt Attribut",
   "retailPrice" : "Einkaufspreis",
 
   "productInstance" : "Produkt Instanz",

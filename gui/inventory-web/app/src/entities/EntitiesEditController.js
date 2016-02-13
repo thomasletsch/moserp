@@ -1,3 +1,13 @@
+var FORM_FIELDS = {
+    default: ["*"],
+    users: ["name"],
+    unitOfMeasurements: ["code", "description"],
+    valueLists: ["key", {"key": "values", "add": "new", "items": ["values[].value"]}],
+    products: ["id", "name", "externalId", "validFrom", "ean", "description", {"key": "attributes", "add": "new", "items": ["attributes[].code", "attributes[].name", "attributes[].description"]}]
+};
+
+
+
 function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $state, $translate, $stateParams, uiGridConstants) {
     $log.debug("EntitiesEditController(" + JSON.stringify($stateParams) + ")");
 
@@ -88,12 +98,6 @@ function EntitiesEditController(EntitiesRepository, $log, $rootScope, $scope, $s
     }
 }
 
-var FORM_FIELDS = {
-    defaults: ["*"],
-    users: ["name"],
-    unitOfMeasurements: ["code", "description"],
-    valueLists: ["key", {"key": "values", "add": "new", "items": ["values[].value"]}]
-};
 
 export default [
     'EntitiesRepository', '$log', '$rootScope', '$scope', '$state', '$translate', '$stateParams', 'uiGridConstants',
