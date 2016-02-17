@@ -18,6 +18,7 @@ package org.moserp.common.structure.factories;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.moserp.common.modules.ModuleRegistry;
 import org.moserp.common.structure.domain.EntityProperty;
 import org.moserp.common.structure.domain.EntityPropertyType;
 import org.moserp.common.structure.domain.OtherRepositoryClass;
@@ -46,7 +47,10 @@ public class AssociationPropertyFactoryTest extends BasicPropertyFactoryTest {
         when(metaData.isExported()).thenReturn(true);
         when(mappings.getMetadataFor(eq(OtherRepositoryClass.class))).thenReturn(metaData);
 
-        propertyFactory = new AssociationPropertyFactory(createConfiguration(), mappings);
+        ModuleRegistry moduleRegistry = mock(ModuleRegistry.class);
+        when(moduleRegistry.getModuleForResource(anyString())).thenReturn("environment-module");
+
+        propertyFactory = new AssociationPropertyFactory(createConfiguration(), mappings, moduleRegistry);
     }
 
     @Test
@@ -55,7 +59,7 @@ public class AssociationPropertyFactoryTest extends BasicPropertyFactoryTest {
         assertEquals("description", null, valueProperty.getDescription());
         assertEquals("format", null, valueProperty.getFormat());
         assertEquals("type", EntityPropertyType.ASSOCIATION, valueProperty.getType());
-        assertEquals("uri", "http://localhost:8080/otherRepositoryClasses", valueProperty.getUri());
+        assertEquals("uri", "http://environment-module/otherRepositoryClasses", valueProperty.getUri());
         assertEquals("items", null, valueProperty.getItems());
     }
 
@@ -65,7 +69,7 @@ public class AssociationPropertyFactoryTest extends BasicPropertyFactoryTest {
         assertEquals("description", null, valueProperty.getDescription());
         assertEquals("format", null, valueProperty.getFormat());
         assertEquals("type", EntityPropertyType.ASSOCIATION, valueProperty.getType());
-        assertEquals("uri", "http://localhost:8080/otherRepositoryClasses", valueProperty.getUri());
+        assertEquals("uri", "http://environment-module/otherRepositoryClasses", valueProperty.getUri());
         assertEquals("items", null, valueProperty.getItems());
         assertEquals("isReadOnly", true, valueProperty.isReadOnly());
     }

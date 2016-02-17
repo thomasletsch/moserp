@@ -42,6 +42,7 @@
         <zxing.version>3.2.0</zxing.version>
         <rest-assured.version>2.4.1</rest-assured.version>
         <lombok.version>1.16.6</lombok.version>
+        <mockito.version>1.10.19</mockito.version>
     </properties>
 
     <modules>
@@ -90,6 +91,17 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

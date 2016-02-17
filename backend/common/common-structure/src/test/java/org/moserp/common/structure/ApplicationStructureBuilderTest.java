@@ -107,7 +107,7 @@ public class ApplicationStructureBuilderTest {
         factories.put("enumPropertyFactory", new EnumPropertyFactory());
         factories.put("datePropertyFactory", new DatePropertyFactory());
         factories.put("dependentEntityPropertyFactory", new DependentEntityPropertyFactory(builder));
-        factories.put("associationPropertyFactory", new AssociationPropertyFactory(configuration, mappings));
+        factories.put("associationPropertyFactory", new AssociationPropertyFactory(configuration, mappings, moduleRegistry));
         when(applicationContext.getBeansOfType(eq(PropertyFactory.class))).thenReturn(factories);
     }
 

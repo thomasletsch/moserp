@@ -14,17 +14,23 @@
  * limitations under the License.
  ******************************************************************************/
 
-package org.moserp.infrastructure.gateway;
+package org.moserp.infrastructure.gateway.config;
 
+import com.netflix.zuul.ZuulFilter;
+import org.moserp.infrastructure.gateway.filter.ContentUrlRewritingFilter;
 import org.springframework.cloud.netflix.zuul.filters.discovery.ServiceRouteMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-public class ModuleServiceMapper implements ServiceRouteMapper {
+@Configuration
+public class ZuulConfiguration {
+    @Bean
+    public ServiceRouteMapper serviceRouteMapper() {
+        return new ModuleServiceMapper();
+    }
 
-    @Override
-    public String apply(String serviceId) {
-        if(serviceId.endsWith("-module")) {
-            return "api/" + serviceId.replace("-module", "");
-        }
-        return serviceId;
+    @Bean
+    public ZuulFilter urlRewritingFilter() {
+        return new ContentUrlRewritingFilter();
     }
 }

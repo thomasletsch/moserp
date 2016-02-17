@@ -18,7 +18,6 @@ package org.moserp.common.structure.factories;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.moserp.common.domain.RestUri;
 import org.moserp.common.modules.ModuleRegistry;
 import org.moserp.common.structure.domain.EntityProperty;
 import org.moserp.common.structure.domain.EntityPropertyType;
@@ -35,7 +34,7 @@ public class ResourceAssociationPropertyFactoryTest extends BasicPropertyFactory
     @Before
     public void setup() throws URISyntaxException {
         ModuleRegistry moduleRegistry = mock(ModuleRegistry.class);
-        when(moduleRegistry.getBaseUriForResource(eq("unitOfMeasurements"))).thenReturn(new RestUri("http://localhost:8080/unitOfMeasurement"));
+        when(moduleRegistry.getModuleForResource(anyString())).thenReturn("environment-module");
         propertyFactory = new ResourceAssociationPropertyFactory(moduleRegistry);
     }
 
@@ -45,7 +44,7 @@ public class ResourceAssociationPropertyFactoryTest extends BasicPropertyFactory
         assertEquals("description", null, valueProperty.getDescription());
         assertEquals("format", null, valueProperty.getFormat());
         assertEquals("type", EntityPropertyType.ASSOCIATION, valueProperty.getType());
-        assertEquals("uri", "http://localhost:8080/unitOfMeasurement", valueProperty.getUri());
+        assertEquals("uri", "http://environment-module/unitOfMeasurements", valueProperty.getUri());
         assertEquals("items", null, valueProperty.getItems());
     }
     @Override

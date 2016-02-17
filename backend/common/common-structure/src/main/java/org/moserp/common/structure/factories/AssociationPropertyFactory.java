@@ -16,6 +16,7 @@
 
 package org.moserp.common.structure.factories;
 
+import org.moserp.common.modules.ModuleRegistry;
 import org.moserp.common.structure.PropertyFactoryContext;
 import org.moserp.common.structure.domain.EntityProperty;
 import org.moserp.common.structure.domain.EntityPropertyType;
@@ -33,11 +34,13 @@ public class AssociationPropertyFactory extends BasicPropertyFactory {
 
     private final RepositoryRestConfiguration configuration;
     private final ResourceMappings mappings;
+    private ModuleRegistry moduleRegistry;
 
     @Autowired
-    public AssociationPropertyFactory(RepositoryRestConfiguration configuration, ResourceMappings mappings) {
+    public AssociationPropertyFactory(RepositoryRestConfiguration configuration, ResourceMappings mappings, ModuleRegistry moduleRegistry) {
         this.configuration = configuration;
         this.mappings = mappings;
+        this.moduleRegistry = moduleRegistry;
     }
 
     @Override
@@ -55,9 +58,9 @@ public class AssociationPropertyFactory extends BasicPropertyFactory {
     }
 
     private String calculateUri(PropertyFactoryContext context) {
-        final BaseUri baseUri = new BaseUri(configuration.getBaseUri());
-        UriComponentsBuilder builder = baseUri.getUriComponentsBuilder();
         ResourceMetadata mapping = mappings.getMetadataFor(context.getPersistentProperty().getType());
+        final BaseUri baseUri = new BaseUri("http://" + moduleRegistry.getModuleForResource(mapping.getRel()));
+        UriComponentsBuilder builder = baseUri.getUriComponentsBuilder();
         return builder.path(mapping.getPath().toString()).build().toUriString();
     }
 }

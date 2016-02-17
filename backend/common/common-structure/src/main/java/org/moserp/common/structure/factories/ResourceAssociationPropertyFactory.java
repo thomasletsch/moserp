@@ -17,13 +17,14 @@
 package org.moserp.common.structure.factories;
 
 import org.moserp.common.annotations.ResourceAssociation;
-import org.moserp.common.domain.RestUri;
 import org.moserp.common.modules.ModuleRegistry;
 import org.moserp.common.structure.PropertyFactoryContext;
 import org.moserp.common.structure.domain.EntityProperty;
 import org.moserp.common.structure.domain.EntityPropertyType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.BaseUri;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 public class ResourceAssociationPropertyFactory extends BasicPropertyFactory {
@@ -51,7 +52,9 @@ public class ResourceAssociationPropertyFactory extends BasicPropertyFactory {
     private String calculateValueListUri(PropertyFactoryContext context) {
         ResourceAssociation resourceAssociation = getAnnotation(context, ResourceAssociation.class);
         String resourceName = resourceAssociation.value();
-        RestUri resourceUri = moduleRegistry.getBaseUriForResource(resourceName);
-        return resourceUri.getUri();
+
+        final BaseUri baseUri = new BaseUri("http://" + moduleRegistry.getModuleForResource(resourceName));
+        UriComponentsBuilder builder = baseUri.getUriComponentsBuilder();
+        return builder.path(resourceName).build().toUriString();
     }
 }

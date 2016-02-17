@@ -18,7 +18,6 @@ package org.moserp.common.structure.factories;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.moserp.common.domain.RestUri;
 import org.moserp.common.modules.ModuleRegistry;
 import org.moserp.common.structure.domain.EntityProperty;
 import org.moserp.common.structure.domain.EntityPropertyType;
@@ -35,7 +34,7 @@ public class ValuePropertyFactoryTest extends BasicPropertyFactoryTest {
     @Before
     public void setup() throws URISyntaxException {
         ModuleRegistry moduleRegistry = mock(ModuleRegistry.class);
-        when(moduleRegistry.getBaseUriForResource(anyString())).thenReturn(new RestUri("http://localhost:8080/valueLists"));
+        when(moduleRegistry.getModuleForResource(anyString())).thenReturn("environment-module");
         propertyFactory = new ValuePropertyFactory(moduleRegistry);
     }
 
@@ -45,7 +44,7 @@ public class ValuePropertyFactoryTest extends BasicPropertyFactoryTest {
         assertEquals("description", null, valueProperty.getDescription());
         assertEquals("format", null, valueProperty.getFormat());
         assertEquals("type", EntityPropertyType.VALUE, valueProperty.getType());
-        assertEquals("uri", "http://localhost:8080/valueLists/listKey/values", valueProperty.getUri());
+        assertEquals("uri", "http://environment-module/valueLists/listKey/values", valueProperty.getUri());
         assertEquals("items", null, valueProperty.getItems());
     }
     @Override

@@ -52,7 +52,7 @@ public class ValuePropertyFactory extends BasicPropertyFactory {
     private String calculateValueListUri(PropertyFactoryContext context) {
         ValueListKey valueListValue = getAnnotation(context, ValueListKey.class);
         String valueListKey = valueListValue.value();
-        final BaseUri baseUri = new BaseUri(moduleRegistry.getBaseUriForResource("valueLists").getUri());
+        final BaseUri baseUri = new BaseUri("http://" + moduleRegistry.getModuleForResource("valueLists") + "/valueLists");
         UriComponentsBuilder builder = baseUri.getUriComponentsBuilder();
         return builder.pathSegment(valueListKey).pathSegment("values").build().toUriString();
     }

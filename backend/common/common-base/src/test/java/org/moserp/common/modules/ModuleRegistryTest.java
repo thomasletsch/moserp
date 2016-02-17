@@ -30,7 +30,8 @@ import static org.junit.Assert.assertEquals;
 @SpringApplicationConfiguration(classes = { ModuleTestConfiguration.class})
 public class ModuleRegistryTest {
 
-    public static final String ENVIRONMENT_MOSERP_ORG = "environment.moserp.org";
+    public static final String ENVIRONMENT_MODULE = "environment-module";
+
     @Autowired
     private ModuleRegistry moduleRegistry;
 
@@ -42,14 +43,14 @@ public class ModuleRegistryTest {
 
     @Test
     public void testGetBaseUriForModule() throws Exception {
-        String uri = moduleRegistry.getBaseUriForModule(ENVIRONMENT_MOSERP_ORG).getUri();
+        String uri = moduleRegistry.getBaseUriForModule(ENVIRONMENT_MODULE).getUri();
         assertEquals("uri", "http://localhost:8080/", uri);
     }
 
     @Test
     public void testGetModuleForResource() throws Exception {
         String module = moduleRegistry.getModuleForResource("users");
-        assertEquals("module", ENVIRONMENT_MOSERP_ORG, module);
+        assertEquals("module", ENVIRONMENT_MODULE, module);
     }
 
     @Test
