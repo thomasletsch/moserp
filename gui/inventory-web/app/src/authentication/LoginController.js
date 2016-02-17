@@ -29,7 +29,7 @@ function LoginController($log, $http, $state, $scope, StructureService, Authenti
     $scope.$on('oauth:denied', function(event) {
         $log.debug('The user did not authorize the third party app');
         AuthenticationService.logout();
-        //window.location = "http://localhost:8899/uaa/oauth/authorize?response_type=token&client_id=web&redirect_uri=http://localhost:8765/web/index.html"
+        window.location = "http://localhost:8899/uaa/oauth/authorize?response_type=token&client_id=web&redirect_uri=http://localhost:8765/web/index.html"
     });
 
     $scope.$on('oauth:expired', function(event) {
