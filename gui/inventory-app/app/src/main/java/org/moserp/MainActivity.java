@@ -151,6 +151,11 @@ public class MainActivity extends ToolbarActivity {
                             case R.id.action_settings:
                                 startActivity(new Intent(getApplicationContext(), PreferencesActivity_.class));
                                 return true;
+                            //missing default case
+                            default:
+                                // add default case
+                                 break;
+
                         }
                         return false;
                     }
